@@ -28,6 +28,7 @@ class Battle:
                         else:
                                  roundmessage += "Both armies are equal. \n \n"
                         if(self.battlePhase >= 3):
+                                 #Attacker Won
                                  #Logs that the army cannot fight, bringing the battle to an end.
                                  army2.continueFighting = False
                                  roundmessage += "{} defeats {}, bringing an end to the battle.\n \n".format(army1.name,army2.name)
@@ -46,6 +47,7 @@ class Battle:
                         else:
                                  roundmessage += "Both armies are equal. \n \n"
                         if(self.battlePhase <= -3):
+                                 #Defender Won
                                  army1.continueFighting = False
                                  roundmessage += "{} defeats {}, bringing an end to the battle.\n \n \n".format(army2.name,army1.name)
                                  roundmessage += "**Winner: {}**\n \n".format(army2.name)
@@ -115,8 +117,8 @@ class Battle:
                 roundCount = 1
                 global attackcas
                 global defendcas
-                attackcas = 0
-                defendcas = 0
+                attackcas = 1
+                defendcas = 1
                 
                 
                 army1 = Army.Army(battleInfo.group(1),int(battleInfo.group(2)),int (battleInfo.group(3)))
@@ -124,13 +126,15 @@ class Battle:
 
                 if(Globals.battleType == "Naval"):
                         battlemessage = "#Naval Battle Between {} and {} \n \n".format(army1.name,army2.name)
+                elif(Globals.battleType == "Ambush"):
+                        self.battlePhase += 2
+                        battlemessage = "#Ambush Battle Between {} and {} \n \n".format(army1.name,army2.name)
                 else:
                         battlemessage = "#Land Battle Between {} and {} \n \n".format(army1.name,army2.name)
                 battlemessage += "*I am a bot by dinoking. Please upvote my comments so I can respond quicker and run faster.* \n \n"
                 battlemessage += "--- \n \n"
                 
                 battlemessage += self.run_round(army1,army2,roundCount)
-
                 while(army1.continueFighting and army2.continueFighting):
                         roundCount += 1
                         battlemessage += self.run_round(army1,army2,roundCount)

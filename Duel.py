@@ -1,44 +1,266 @@
 import re
 import random
 import Dueler
+import Globals
 class Duel:
+        
         duelPhase = 0
+        phaseDifference = 0
+        
+        
         def run_round(self,dueler1,dueler2,roundCount):
+                
                 roundmessage = "##**Round {}** \n \n".format(roundCount+1)
                 roll1 = dueler1.attack_roll()
                 roll2 = dueler2.attack_roll()
                 roundmessage += "**{}** Roll: {} ({:+})\n \n".format(dueler1.name,roll1-dueler1.bonus,dueler1.bonus)
                 roundmessage += "**{}** Roll: {} ({:+})\n \n".format(dueler2.name,roll2-dueler2.bonus,dueler2.bonus)
+
                 if(roll1 > roll2):
                         difference = roll1-roll2
-                        if(difference > 89):
-                                dueler1.bonus += dueler2.death_roll()
-                                roundmessage += "{} strikes hard, crushing {} and dealing a deathroll.\n \n".format(dueler1.name,dueler2.name)
-                        elif(difference > 44):
+
+                        phaseDifference = 0
+                        if(difference > 44):
                                 self.duelPhase += 1
-                                roundmessage += "{} pushes {} back.\n \n".format(dueler1.name,dueler2.name)
-                        if(self.duelPhase == 2):
-                                dueler1.bonus += dueler2.injury_roll()
-                                roundmessage += "{} is vulnerable, leaving them open to injury.\n \n".format(dueler2.name)
-                        elif(self.duelPhase == 3):
-                                 dueler1.bonus += dueler2.broken_roll()
-                                 roundmessage += "{} breaks {}, bringing an end to the duel.\n \n".format(dueler1.name,dueler2.name)
-                if(roll2 > roll1):
-                        difference = roll2-roll1
+                                self.phaseDifference = 1
+
                         if(difference > 89):
-                                dueler2.bonus += dueler1.death_roll()
-                                roundmessage += "{} strikes hard, crushing {} and dealing a deathroll.\n \n".format(dueler2.name,dueler1.name)
-                        elif(difference > 44):
+                                self.duelPhase += 10
+                                if(Globals.duelType == "Live"):
+                                        dueler1.bonus += dueler2.death_roll()
+                                else:
+                                        dueler1.bonus += dueler2.blunted_roll()
+                                roundmessage += "{} breaks {}, bringing an end to the duel.\n \n".format(dueler1.name,dueler2.name)
+                                roundmessage += "##**Phase - {} Broken** \n \n".format(dueler2.name)
+
+
+                        elif(self.duelPhase >= 3):
+                                 if (Globals.duelType == "Live Duel"):
+                                         dueler1.bonus += dueler2.broken_roll()
+                                 else:
+                                         dueler1.bonus += dueler2.blunted_roll()
+                                 roundmessage += "{} defeats {}, bringing an end to the duel.\n \n".format(dueler1.name,dueler2.name)
+                                 roundmessage += "##**Phase - {} Broken** \n \n".format(dueler2.name)
+                                 
+
+                else:
+                        difference = roll2-roll1
+                        
+                        phaseDifference = 0
+                        if(difference > 44):
                                 self.duelPhase -= 1
-                                roundmessage += "{} pushes {} back.\n \n".format(dueler2.name,dueler1.name)
-                        if(self.duelPhase == -2):
-                                dueler2.bonus += dueler1.injury_roll()
-                                roundmessage += "{} is vulnerable, leaving them open to injury.\n \n".format(dueler1.name)
-                        elif(self.duelPhase == -3):
-                                dueler2.bonus += dueler1.broken_roll()
+                                self.phaseDifference = -1
+
+                        if(difference > 89):
+                                self.duelPhase -= 10
+                                if(Globals.duelType == "Live"):
+                                        dueler2.bonus += dueler1.death_roll()
+                                else:
+                                        dueler2.bonus += dueler1.blunted_roll()
                                 roundmessage += "{} breaks {}, bringing an end to the duel.\n \n".format(dueler2.name,dueler1.name)
+                                roundmessage += "##**Phase - {} Broken** \n \n".format(dueler1.name)
+
+
+                        elif(self.duelPhase <= -3):
+                                if (Globals.duelType == "Live Duel"):
+                                        dueler2.bonus += dueler1.broken_roll()
+                                else:
+                                        dueler2.bonus += dueler1.blunted_roll()
+                                roundmessage += "{} defeats {}, bringing an end to the duel.\n \n".format(dueler2.name,dueler1.name)
+                                roundmessage += "##**Phase - {} Broken** \n \n".format(dueler1.name)
+
+
+
+
+                if(self.duelPhase == 2):
+                        roll = dueler2.injury_roll()
+                        dueler2.bonus -= roll
+                        if (roll == 10):
+                                message = random.randint(1,4)
+                                if(message == 1):
+                                        roundmessage += "{} deflects a blow aimed at their head, and makes a quick thrust giving their opponent a moderate injury.\n \n".format(dueler1.name)
+                                elif(message == 2):
+                                        roundmessage += "{} tries to lunge for their opponent, and recieves a moderate injury for their effort.\n \n".format(dueler2.name)
+                                elif(message == 3):
+                                        roundmessage += "{} overpowers their opponent and manages to give them a moderate injury.\n \n".format(dueler1.name)
+                                elif(message == 4):
+                                        roundmessage += "{} leaves themselves open, gaining a moderate injury.\n \n".format(dueler2.name)
+                        elif (roll == 5):
+                                message = random.randint(1,4)
+                                if(message == 1):
+                                        roundmessage += "{} makes a quick attack, leaving their opponent with a minor injury.\n \n".format(dueler1.name)
+                                elif(message == 2):
+                                        roundmessage += "{} parries a blow and gives their opponent a minor injury.\n \n".format(dueler1.name)
+                                elif(message == 3):
+                                        roundmessage += "{} quickly lunges, managing to give their opponent a minor injury.\n \n".format(dueler1.name)
+                                elif(message == 4):
+                                        roundmessage += "{} is a fraction too slow to avoid their opponents blow, getting a minor injury.\n \n".format(dueler2.name)
+                        else:
+                                message = random.randint(1,4)
+                                if(message == 1):
+                                        roundmessage += "{} narrowly dodges their opponent's blow.\n \n".format(dueler2.name)
+                                elif(message == 2):
+                                        roundmessage += "{} parries a blow aimed at their head.\n \n".format(dueler2.name)
+                                elif(message == 3):
+                                        roundmessage += "{} manages to turn aside a blow meant for their arm.\n \n".format(dueler2.name)
+                                elif(message == 4):
+                                        roundmessage += "{} aims their blow a bit too high, missing {}.\n \n".format(dueler1.name,dueler2.name)
+                                        
+                        roundmessage += "##**Phase - {} Injured** \n \n".format(dueler2.name)
+
+
+                        
+                elif(self.duelPhase == -2):
+                        roll = dueler1.injury_roll()
+                        dueler1.bonus -= roll
+                        if (roll == 10):
+                                message = random.randint(1,4)
+                                if(message == 1):
+                                        roundmessage += "{} deflects a blow aimed at their head, and makes a quick thrust giving their opponent a moderate injury.\n \n".format(dueler2.name)
+                                elif(message == 2):
+                                        roundmessage += "{} tries to lunge for their opponent, and recieves a moderate injury for their effort.\n \n".format(dueler1.name)
+                                elif(message == 3):
+                                        roundmessage += "{} overpowers their opponent and manages to give them a moderate injury.\n \n".format(dueler2.name)
+                                elif(message == 4):
+                                        roundmessage += "{} leaves themselves open, gaining a moderate injury.\n \n".format(dueler1.name)
+                        elif (roll == 5):
+                                message = random.randint(1,4)
+                                if(message == 1):
+                                        roundmessage += "{} makes a quick attack, leaving their opponent with a minor injury.\n \n".format(dueler2.name)
+                                elif(message == 2):
+                                        roundmessage += "{} parries a blow and gives their opponent a minor injury.\n \n".format(dueler2.name)
+                                elif(message == 3):
+                                        roundmessage += "{} quickly lunges, managing to give their opponent a minor injury.\n \n".format(dueler2.name)
+                                elif(message == 4):
+                                        roundmessage += "{} is a fraction too slow to avoid their opponents blow, getting a minor injury.\n \n".format(dueler1.name)
+                        else:
+                                message = random.randint(1,4)
+                                if(message == 1):
+                                        roundmessage += "{} narrowly dodges their opponent's blow.\n \n".format(dueler1.name)
+                                elif(message == 2):
+                                        roundmessage += "{} parries a blow aimed at their head.\n \n".format(dueler1.name)
+                                elif(message == 3):
+                                        roundmessage += "{} manages to turn aside a blow meant for their arm.\n \n".format(dueler1.name)
+                                elif(message == 4):
+                                        roundmessage += "{} aims their blow a bit too high, missing {}.\n \n".format(dueler2.name,dueler1.name)
+                                        
+
+                        roundmessage += "##**Phase - {} Injured** \n \n".format(dueler1.name)
+
+              
+                                        
+                elif(self.duelPhase == 1):
+                        if(self.phaseDifference == 1):
+                                message = random.randint(1,4)
+                                if(message == 1):
+                                        roundmessage += "{} pushes their opponent back\n \n".format(dueler1.name)
+                                elif(message == 2):
+                                        roundmessage += "{} leaps backwards to avoid {}'s oncoming blows.\n \n".format(dueler2.name,dueler1.name)
+                                elif(message == 3):
+                                        roundmessage += "{} sweeps under their opponent's guard, pushing them backwards.\n \n".format(dueler1.name)
+                                elif(message == 4):
+                                        roundmessage += "{} sidesteps {}, forcing them to readjust their guard.\n \n".format(dueler1.name,dueler2.name)
+                        elif(self.phaseDifference == -1):
+                                message = random.randint(1,4)
+                                if(message == 1):
+                                        roundmessage += "{} pushes their opponent back\n \n".format(dueler2.name)
+                                elif(message == 2):
+                                        roundmessage += "{} leaps backwards to avoid {}'s oncoming blows.\n \n".format(dueler1.name,dueler2.name)
+                                elif(message == 3):
+                                        roundmessage += "{} sweeps under their opponent's guard, pushing them backwards.\n \n".format(dueler2.name)
+                                elif(message == 4):
+                                        roundmessage += "{} sidesteps {}, forcing them to readjust their guard.\n \n".format(dueler2.name,dueler1.name)
+                        else:
+                                message = random.randint(1,4)
+                                if(message == 1):
+                                        roundmessage += "{} sidesteps an oncoming blow and delivers one back in return.\n \n".format(dueler2.name)
+                                elif(message == 2):
+                                        roundmessage += "{} exchanges blows with their opponent, neither side letting up.\n \n".format(dueler2.name)
+                                elif(message == 3):
+                                        roundmessage += "{} sidesteps an oncoming blow and delivers one back in return.\n \n".format(dueler1.name)
+                                elif(message == 4):
+                                        roundmessage += "{} exchanges blows with their opponent, neither side letting up.\n \n".format(dueler1.name)        
+
+                        roundmessage += "##**Phase - {} Losing** \n \n".format(dueler2.name)
+
+        
+                        
+                elif(self.duelPhase == -1):
+                        if(self.phaseDifference == 1):
+                                message = random.randint(1,4)
+                                if(message == 1):
+                                        roundmessage += "{} pushes their opponent back\n \n".format(dueler1.name)
+                                elif(message == 2):
+                                        roundmessage += "{} leaps backwards to avoid {}'s oncoming blows.\n \n".format(dueler2.name,dueler1.name)
+                                elif(message == 3):
+                                        roundmessage += "{} sweeps under their opponent's guard, pushing them backwards.\n \n".format(dueler1.name)
+                                elif(message == 4):
+                                        roundmessage += "{} sidesteps {}, forcing them to readjust their guard.\n \n".format(dueler1.name,dueler2.name)
+                        elif(self.phaseDifference == -1):
+                                message = random.randint(1,4)
+                                if(message == 1):
+                                        roundmessage += "{} pushes their opponent back\n \n".format(dueler2.name)
+                                elif(message == 2):
+                                        roundmessage += "{} leaps backwards to avoid {}'s oncoming blows.\n \n".format(dueler1.name,dueler2.name)
+                                elif(message == 3):
+                                        roundmessage += "{} sweeps under their opponent's guard, pushing them backwards.\n \n".format(dueler2.name)
+                                elif(message == 4):
+                                        roundmessage += "{} sidesteps {}, forcing them to readjust their guard.\n \n".format(dueler2.name,dueler1.name)
+                        else:
+                                message = random.randint(1,4)
+                                if(message == 1):
+                                        roundmessage += "{} sidesteps an oncoming blow and delivers one back in return.\n \n".format(dueler2.name)
+                                elif(message == 2):
+                                        roundmessage += "{} exchanges blows with their opponent, neither side letting up.\n \n".format(dueler2.name)
+                                elif(message == 3):
+                                        roundmessage += "{} sidesteps an oncoming blow and delivers one back in return.\n \n".format(dueler1.name)
+                                elif(message == 4):
+                                        roundmessage += "{} exchanges blows with their opponent, neither side letting up.\n \n".format(dueler1.name)        
+
+                        roundmessage += "##**Phase - {} Losing** \n \n".format(dueler1.name)
+
+                        
+
+                elif(self.duelPhase == 0):
+                        if(self.phaseDifference == 1):
+                                message = random.randint(1,4)
+                                if(message == 1):
+                                        roundmessage += "{} pushes their opponent back\n \n".format(dueler1.name)
+                                elif(message == 2):
+                                        roundmessage += "{} leaps backwards to avoid {}'s oncoming blows.\n \n".format(dueler2.name,dueler1.name)
+                                elif(message == 3):
+                                        roundmessage += "{} sweeps under their opponent's guard, pushing them backwards.\n \n".format(dueler1.name)
+                                elif(message == 4):
+                                        roundmessage += "{} sidesteps {}, forcing them to readjust their guard.\n \n".format(dueler1.name,dueler2.name)
+                        elif(self.phaseDifference == -1):
+                                message = random.randint(1,4)
+                                if(message == 1):
+                                        roundmessage += "{} pushes their opponent back\n \n".format(dueler2.name)
+                                elif(message == 2):
+                                        roundmessage += "{} leaps backwards to avoid {}'s oncoming blows.\n \n".format(dueler1.name,dueler2.name)
+                                elif(message == 3):
+                                        roundmessage += "{} sweeps under their opponent's guard, pushing them backwards.\n \n".format(dueler2.name)
+                                elif(message == 4):
+                                        roundmessage += "{} sidesteps {}, forcing them to readjust their guard.\n \n".format(dueler2.name,dueler1.name)
+                        else:
+                                message = random.randint(1,4)
+                                if(message == 1):
+                                        roundmessage += "{} sidesteps an oncoming blow and delivers one back in return.\n \n".format(dueler2.name)
+                                elif(message == 2):
+                                        roundmessage += "{} exchanges blows with their opponent, neither side letting up.\n \n".format(dueler2.name)
+                                elif(message == 3):
+                                        roundmessage += "{} sidesteps an oncoming blow and delivers one back in return.\n \n".format(dueler1.name)
+                                elif(message == 4):
+                                        roundmessage += "{} exchanges blows with their opponent, neither side letting up.\n \n".format(dueler1.name)        
+
+                        roundmessage += "##**Phase - Even** \n \n"
+
+
+
+                                
                 roundmessage += "--- \n \n"
                 return roundmessage
+        
         def run(self,duelInfo):
                 roundCount = 0
                 dueler1 = Dueler.Dueler(duelInfo.group(1),int(duelInfo.group(2)))
@@ -49,14 +271,26 @@ class Duel:
                 while(dueler1.continueFighting and dueler2.continueFighting):
                         battlemessage += self.run_round(dueler1,dueler2,roundCount)
                         roundCount += 1
+                        
                 if(dueler1.continueFighting):
                         battlemessage += "**Winner: {}**\n \n".format(dueler1.name)
                 else:
                         battlemessage += "**Winner: {}**\n \n".format(dueler2.name)
                 battlemessage += "Rounds taken: {} \n \n".format(roundCount)
-                battlemessage += "**{}:** Bonus: {} - Alive: {} - Can Continue Fighting: {} - Minor Injuries: {} - Moderate Injuries: {} - Major Injuries: {}\n \n".format(dueler1.name,dueler1.bonus,dueler1.alive,dueler1.ableToFight,dueler1.minorInjuries,dueler1.moderateInjuries,dueler1.majorInjuries)
-                battlemessage += "**{}:** Bonus: {} - Alive: {} - Can Continue Fighting: {} - Minor Injuries: {} - Moderate Injuries: {} - Major Injuries: {}\n \n".format(dueler2.name,dueler2.bonus,dueler2.alive,dueler2.ableToFight,dueler2.minorInjuries,dueler2.moderateInjuries,dueler2.majorInjuries)
-                self.reset_duel_phase()
+                
+                if(dueler1.alive == False and dueler2.alive == False):
+                        battlemessage += "Both combatants are killed in the duel.\n\n"
+                if(dueler1.alive == False):
+                        battlemessage += "{} is killed in the duel. Their opponent emerges with {} major, {} moderate and {} minor injuries.\n\n".format(dueler1.name,dueler2.majorInjuries,dueler2.moderateInjuries,dueler2.minorInjuries)
+                elif(dueler2.alive == False):
+                        battlemessage += "{} is killed in the duel. Their opponent emerges with {} major, {} moderate and {} minor injuries.\n\n".format(dueler2.name,dueler1.majorInjuries,dueler1.moderateInjuries,dueler1.minorInjuries)
+                else:
+                        battlemessage += "{} emerges from the duel with {} major, {} moderate and {} minor injuries.\n\n".format(dueler1.name,dueler1.majorInjuries,dueler1.moderateInjuries,dueler1.minorInjuries)
+                        battlemessage += "{} emerges from the duel with {} major, {} moderate and {} minor injuries.\n\n".format(dueler2.name,dueler2.majorInjuries,dueler2.moderateInjuries,dueler2.minorInjuries)
+                        
+                ##reset_duel_phase()
+                self.duelPhase = 0
                 return battlemessage
+        
         def reset_duel_phase(self):
                 self.duelPhase = 0
