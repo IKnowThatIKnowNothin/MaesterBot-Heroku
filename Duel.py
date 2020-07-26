@@ -6,6 +6,7 @@ class Duel:
         
         duelPhase = 0
         phaseDifference = 0
+        Globals.message = 1
         
         
         def run_round(self,dueler1,dueler2,roundCount):
@@ -19,14 +20,14 @@ class Duel:
                 if(roll1 > roll2):
                         difference = roll1-roll2
 
-                        phaseDifference = 0
+                        self.phaseDifference = 0
                         if(difference > 44):
                                 self.duelPhase += 1
                                 self.phaseDifference = 1
 
                         if(difference > 89):
                                 self.duelPhase += 10
-                                if(Globals.duelType == "Live"):
+                                if(Globals.battleType == "Live"):
                                         dueler1.bonus += dueler2.death_roll()
                                 else:
                                         dueler1.bonus += dueler2.blunted_roll()
@@ -35,7 +36,7 @@ class Duel:
 
 
                         elif(self.duelPhase >= 3):
-                                 if (Globals.duelType == "Live Duel"):
+                                 if (Globals.battleType == "Live Duel"):
                                          dueler1.bonus += dueler2.broken_roll()
                                  else:
                                          dueler1.bonus += dueler2.blunted_roll()
@@ -46,14 +47,14 @@ class Duel:
                 else:
                         difference = roll2-roll1
                         
-                        phaseDifference = 0
+                        self.phaseDifference = 0
                         if(difference > 44):
                                 self.duelPhase -= 1
                                 self.phaseDifference = -1
 
                         if(difference > 89):
                                 self.duelPhase -= 10
-                                if(Globals.duelType == "Live"):
+                                if(Globals.battleType == "Live"):
                                         dueler2.bonus += dueler1.death_roll()
                                 else:
                                         dueler2.bonus += dueler1.blunted_roll()
@@ -62,7 +63,7 @@ class Duel:
 
 
                         elif(self.duelPhase <= -3):
-                                if (Globals.duelType == "Live Duel"):
+                                if (Globals.battleType == "Live Duel"):
                                         dueler2.bonus += dueler1.broken_roll()
                                 else:
                                         dueler2.bonus += dueler1.blunted_roll()
@@ -76,34 +77,34 @@ class Duel:
                         roll = dueler2.injury_roll()
                         dueler2.bonus -= roll
                         if (roll == 10):
-                                message = random.randint(1,4)
-                                if(message == 1):
+                                Globals.message = self.numberGen(4)
+                                if(Globals.message == 1):
                                         roundmessage += "{} deflects a blow aimed at their head, and makes a quick thrust giving their opponent a moderate injury.\n \n".format(dueler1.name)
-                                elif(message == 2):
+                                elif(Globals.message == 2):
                                         roundmessage += "{} tries to lunge for their opponent, and recieves a moderate injury for their effort.\n \n".format(dueler2.name)
-                                elif(message == 3):
+                                elif(Globals.message == 3):
                                         roundmessage += "{} overpowers their opponent and manages to give them a moderate injury.\n \n".format(dueler1.name)
-                                elif(message == 4):
+                                elif(Globals.message == 4):
                                         roundmessage += "{} leaves themselves open, gaining a moderate injury.\n \n".format(dueler2.name)
                         elif (roll == 5):
-                                message = random.randint(1,4)
-                                if(message == 1):
+                                Globals.message = self.numberGen(4)
+                                if(Globals.message == 1):
                                         roundmessage += "{} makes a quick attack, leaving their opponent with a minor injury.\n \n".format(dueler1.name)
-                                elif(message == 2):
+                                elif(Globals.message == 2):
                                         roundmessage += "{} parries a blow and gives their opponent a minor injury.\n \n".format(dueler1.name)
-                                elif(message == 3):
+                                elif(Globals.message == 3):
                                         roundmessage += "{} quickly lunges, managing to give their opponent a minor injury.\n \n".format(dueler1.name)
-                                elif(message == 4):
+                                elif(Globals.message == 4):
                                         roundmessage += "{} is a fraction too slow to avoid their opponents blow, getting a minor injury.\n \n".format(dueler2.name)
                         else:
-                                message = random.randint(1,4)
-                                if(message == 1):
+                                Globals.message = self.numberGen(4)
+                                if(Globals.message == 1):
                                         roundmessage += "{} narrowly dodges their opponent's blow.\n \n".format(dueler2.name)
-                                elif(message == 2):
+                                elif(Globals.message == 2):
                                         roundmessage += "{} parries a blow aimed at their head.\n \n".format(dueler2.name)
-                                elif(message == 3):
+                                elif(Globals.message == 3):
                                         roundmessage += "{} manages to turn aside a blow meant for their arm.\n \n".format(dueler2.name)
-                                elif(message == 4):
+                                elif(Globals.message == 4):
                                         roundmessage += "{} aims their blow a bit too high, missing {}.\n \n".format(dueler1.name,dueler2.name)
                                         
                         roundmessage += "##**Phase - {} Injured** \n \n".format(dueler2.name)
@@ -114,34 +115,34 @@ class Duel:
                         roll = dueler1.injury_roll()
                         dueler1.bonus -= roll
                         if (roll == 10):
-                                message = random.randint(1,4)
-                                if(message == 1):
+                                Globals.message = self.numberGen(4)
+                                if(Globals.message == 1):
                                         roundmessage += "{} deflects a blow aimed at their head, and makes a quick thrust giving their opponent a moderate injury.\n \n".format(dueler2.name)
-                                elif(message == 2):
+                                elif(Globals.message == 2):
                                         roundmessage += "{} tries to lunge for their opponent, and recieves a moderate injury for their effort.\n \n".format(dueler1.name)
-                                elif(message == 3):
+                                elif(Globals.message == 3):
                                         roundmessage += "{} overpowers their opponent and manages to give them a moderate injury.\n \n".format(dueler2.name)
-                                elif(message == 4):
+                                elif(Globals.message == 4):
                                         roundmessage += "{} leaves themselves open, gaining a moderate injury.\n \n".format(dueler1.name)
                         elif (roll == 5):
-                                message = random.randint(1,4)
-                                if(message == 1):
+                                Globals.message = self.numberGen(4)
+                                if(Globals.message == 1):
                                         roundmessage += "{} makes a quick attack, leaving their opponent with a minor injury.\n \n".format(dueler2.name)
-                                elif(message == 2):
+                                elif(Globals.message == 2):
                                         roundmessage += "{} parries a blow and gives their opponent a minor injury.\n \n".format(dueler2.name)
-                                elif(message == 3):
+                                elif(Globals.message == 3):
                                         roundmessage += "{} quickly lunges, managing to give their opponent a minor injury.\n \n".format(dueler2.name)
-                                elif(message == 4):
+                                elif(Globals.message == 4):
                                         roundmessage += "{} is a fraction too slow to avoid their opponents blow, getting a minor injury.\n \n".format(dueler1.name)
                         else:
-                                message = random.randint(1,4)
-                                if(message == 1):
+                                Globals.message = self.numberGen(4)
+                                if(Globals.message == 1):
                                         roundmessage += "{} narrowly dodges their opponent's blow.\n \n".format(dueler1.name)
-                                elif(message == 2):
+                                elif(Globals.message == 2):
                                         roundmessage += "{} parries a blow aimed at their head.\n \n".format(dueler1.name)
-                                elif(message == 3):
+                                elif(Globals.message == 3):
                                         roundmessage += "{} manages to turn aside a blow meant for their arm.\n \n".format(dueler1.name)
-                                elif(message == 4):
+                                elif(Globals.message == 4):
                                         roundmessage += "{} aims their blow a bit too high, missing {}.\n \n".format(dueler2.name,dueler1.name)
                                         
 
@@ -151,34 +152,34 @@ class Duel:
                                         
                 elif(self.duelPhase == 1):
                         if(self.phaseDifference == 1):
-                                message = random.randint(1,4)
-                                if(message == 1):
+                                Globals.message = self.numberGen(4)
+                                if(Globals.message == 1):
                                         roundmessage += "{} pushes their opponent back\n \n".format(dueler1.name)
-                                elif(message == 2):
+                                elif(Globals.message == 2):
                                         roundmessage += "{} leaps backwards to avoid {}'s oncoming blows.\n \n".format(dueler2.name,dueler1.name)
-                                elif(message == 3):
+                                elif(Globals.message == 3):
                                         roundmessage += "{} sweeps under their opponent's guard, pushing them backwards.\n \n".format(dueler1.name)
-                                elif(message == 4):
+                                elif(Globals.message == 4):
                                         roundmessage += "{} sidesteps {}, forcing them to readjust their guard.\n \n".format(dueler1.name,dueler2.name)
                         elif(self.phaseDifference == -1):
-                                message = random.randint(1,4)
-                                if(message == 1):
+                                Globals.message = self.numberGen(4)
+                                if(Globals.message == 1):
                                         roundmessage += "{} pushes their opponent back\n \n".format(dueler2.name)
-                                elif(message == 2):
+                                elif(Globals.message == 2):
                                         roundmessage += "{} leaps backwards to avoid {}'s oncoming blows.\n \n".format(dueler1.name,dueler2.name)
-                                elif(message == 3):
+                                elif(Globals.message == 3):
                                         roundmessage += "{} sweeps under their opponent's guard, pushing them backwards.\n \n".format(dueler2.name)
-                                elif(message == 4):
+                                elif(Globals.message == 4):
                                         roundmessage += "{} sidesteps {}, forcing them to readjust their guard.\n \n".format(dueler2.name,dueler1.name)
                         else:
-                                message = random.randint(1,4)
-                                if(message == 1):
+                                Globals.message = self.numberGen(4)
+                                if(Globals.message == 1):
                                         roundmessage += "{} sidesteps an oncoming blow and delivers one back in return.\n \n".format(dueler2.name)
-                                elif(message == 2):
+                                elif(Globals.message == 2):
                                         roundmessage += "{} exchanges blows with their opponent, neither side letting up.\n \n".format(dueler2.name)
-                                elif(message == 3):
+                                elif(Globals.message == 3):
                                         roundmessage += "{} sidesteps an oncoming blow and delivers one back in return.\n \n".format(dueler1.name)
-                                elif(message == 4):
+                                elif(Globals.message == 4):
                                         roundmessage += "{} exchanges blows with their opponent, neither side letting up.\n \n".format(dueler1.name)        
 
                         roundmessage += "##**Phase - {} Losing** \n \n".format(dueler2.name)
@@ -187,34 +188,34 @@ class Duel:
                         
                 elif(self.duelPhase == -1):
                         if(self.phaseDifference == 1):
-                                message = random.randint(1,4)
-                                if(message == 1):
+                                Globals.message = self.numberGen(4)
+                                if(Globals.message == 1):
                                         roundmessage += "{} pushes their opponent back\n \n".format(dueler1.name)
-                                elif(message == 2):
+                                elif(Globals.message == 2):
                                         roundmessage += "{} leaps backwards to avoid {}'s oncoming blows.\n \n".format(dueler2.name,dueler1.name)
-                                elif(message == 3):
+                                elif(Globals.message == 3):
                                         roundmessage += "{} sweeps under their opponent's guard, pushing them backwards.\n \n".format(dueler1.name)
-                                elif(message == 4):
+                                elif(Globals.message == 4):
                                         roundmessage += "{} sidesteps {}, forcing them to readjust their guard.\n \n".format(dueler1.name,dueler2.name)
                         elif(self.phaseDifference == -1):
-                                message = random.randint(1,4)
-                                if(message == 1):
+                                Globals.message = self.numberGen(4)
+                                if(Globals.message == 1):
                                         roundmessage += "{} pushes their opponent back\n \n".format(dueler2.name)
-                                elif(message == 2):
+                                elif(Globals.message == 2):
                                         roundmessage += "{} leaps backwards to avoid {}'s oncoming blows.\n \n".format(dueler1.name,dueler2.name)
-                                elif(message == 3):
+                                elif(Globals.message == 3):
                                         roundmessage += "{} sweeps under their opponent's guard, pushing them backwards.\n \n".format(dueler2.name)
-                                elif(message == 4):
+                                elif(Globals.message == 4):
                                         roundmessage += "{} sidesteps {}, forcing them to readjust their guard.\n \n".format(dueler2.name,dueler1.name)
                         else:
-                                message = random.randint(1,4)
-                                if(message == 1):
+                                Globals.message = self.numberGen(4)
+                                if(Globals.message == 1):
                                         roundmessage += "{} sidesteps an oncoming blow and delivers one back in return.\n \n".format(dueler2.name)
-                                elif(message == 2):
+                                elif(Globals.message == 2):
                                         roundmessage += "{} exchanges blows with their opponent, neither side letting up.\n \n".format(dueler2.name)
-                                elif(message == 3):
+                                elif(Globals.message == 3):
                                         roundmessage += "{} sidesteps an oncoming blow and delivers one back in return.\n \n".format(dueler1.name)
-                                elif(message == 4):
+                                elif(Globals.message == 4):
                                         roundmessage += "{} exchanges blows with their opponent, neither side letting up.\n \n".format(dueler1.name)        
 
                         roundmessage += "##**Phase - {} Losing** \n \n".format(dueler1.name)
@@ -223,34 +224,34 @@ class Duel:
 
                 elif(self.duelPhase == 0):
                         if(self.phaseDifference == 1):
-                                message = random.randint(1,4)
-                                if(message == 1):
+                                Globals.message = self.numberGen(4)
+                                if(Globals.message == 1):
                                         roundmessage += "{} pushes their opponent back\n \n".format(dueler1.name)
-                                elif(message == 2):
+                                elif(Globals.message == 2):
                                         roundmessage += "{} leaps backwards to avoid {}'s oncoming blows.\n \n".format(dueler2.name,dueler1.name)
-                                elif(message == 3):
+                                elif(Globals.message == 3):
                                         roundmessage += "{} sweeps under their opponent's guard, pushing them backwards.\n \n".format(dueler1.name)
-                                elif(message == 4):
+                                elif(Globals.message == 4):
                                         roundmessage += "{} sidesteps {}, forcing them to readjust their guard.\n \n".format(dueler1.name,dueler2.name)
                         elif(self.phaseDifference == -1):
-                                message = random.randint(1,4)
-                                if(message == 1):
+                                Globals.message = self.numberGen(4)
+                                if(Globals.message == 1):
                                         roundmessage += "{} pushes their opponent back\n \n".format(dueler2.name)
-                                elif(message == 2):
+                                elif(Globals.message == 2):
                                         roundmessage += "{} leaps backwards to avoid {}'s oncoming blows.\n \n".format(dueler1.name,dueler2.name)
-                                elif(message == 3):
+                                elif(Globals.message == 3):
                                         roundmessage += "{} sweeps under their opponent's guard, pushing them backwards.\n \n".format(dueler2.name)
-                                elif(message == 4):
+                                elif(Globals.message == 4):
                                         roundmessage += "{} sidesteps {}, forcing them to readjust their guard.\n \n".format(dueler2.name,dueler1.name)
                         else:
-                                message = random.randint(1,4)
-                                if(message == 1):
+                                Globals.message = self.numberGen(4)
+                                if(Globals.message == 1):
                                         roundmessage += "{} sidesteps an oncoming blow and delivers one back in return.\n \n".format(dueler2.name)
-                                elif(message == 2):
+                                elif(Globals.message == 2):
                                         roundmessage += "{} exchanges blows with their opponent, neither side letting up.\n \n".format(dueler2.name)
-                                elif(message == 3):
+                                elif(Globals.message == 3):
                                         roundmessage += "{} sidesteps an oncoming blow and delivers one back in return.\n \n".format(dueler1.name)
-                                elif(message == 4):
+                                elif(Globals.message == 4):
                                         roundmessage += "{} exchanges blows with their opponent, neither side letting up.\n \n".format(dueler1.name)        
 
                         roundmessage += "##**Phase - Even** \n \n"
@@ -260,6 +261,15 @@ class Duel:
                                 
                 roundmessage += "--- \n \n"
                 return roundmessage
+
+
+        def numberGen(self,maxCount):
+                newMessage = random.randint(1,maxCount)
+                message2 = Globals.message
+                while (newMessage == message2):
+                        newMessage = random.randint(1,maxCount)
+                return newMessage
+                        
         
         def run(self,duelInfo):
                 roundCount = 0
