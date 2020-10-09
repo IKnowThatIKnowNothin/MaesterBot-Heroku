@@ -40,15 +40,15 @@ for comment in subreddit.stream.comments(skip_existing=False):
             battleInfo = re.match("(\d\d) ([d]) (\d\d\d)",comment.body)
             if(battleInfo):
                 print ("Rolling")
-		noDice = int (battleInfo(group(1)))
-		sizeDice = int (battleInfo(group(3))
-		int i = 0
-		int printed = 0
-		while(noDice != i):
-			printed += random.randint(1,sizeDice)
-			i++
+                noDice = int (battleInfo(group(1)))
+                sizeDice = int (battleInfo(group(3))
+                int i = 0
+                int printed = 0
+                while(noDice != i):
+                        printed += random.randint(1,sizeDice)
+                        i++
 
-		comment.reply(printed)#Post all at once
+                comment.reply(printed)#Post all at once
                     with open("comments_replied_to.txt", "w") as f:
                         for comment_id in comments_replied_to:
                             f.write(comment_id + "\n")
