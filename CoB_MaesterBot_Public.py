@@ -35,6 +35,34 @@ for comment in subreddit.stream.comments(skip_existing=False):
         comments_replied_to.append(comment.id)
 
 
+        if(re.search("Roll",comment.body,re.IGNORECASE)):
+            Globals.battleType = "Naval"
+            battleInfo = re.match("(\d\d) ([d]) (\d\d\d)",comment.body)
+            if(battleInfo):
+                print ("Rolling")
+		noDice = int (battleInfo(group(1)))
+		sizeDice = int (battleInfo(group(3))
+		int i = 0
+		int printed = 0
+		while(noDice != i):
+			printed += random.randint(1,sizeDice)
+			i++
+
+		comment.reply(printed)#Post all at once
+                    with open("comments_replied_to.txt", "w") as f:
+                        for comment_id in comments_replied_to:
+                            f.write(comment_id + "\n")
+
+      
+            else:
+                print ("Improperly formatted roll")
+                comment.reply("Improperly formatted Roll. Please format comment as follows (The dice you're rolling must have 3 digits, and the number of dice must have 2 e.g. 0100 and 02) : \n \n Roll \n \n 01d100 \n \n tag MaesterBot")
+                with open("comments_replied_to.txt", "w") as f:
+                    for comment_id in comments_replied_to:
+                        f.write(comment_id + "\n")
+            time.sleep(60) #We sleep for 3 minutes after each battle so we don't get screwed by rate limits. Delete this when karma is high enough.
+
+
 
             
         if(re.search("Naval Battle",comment.body,re.IGNORECASE)):
