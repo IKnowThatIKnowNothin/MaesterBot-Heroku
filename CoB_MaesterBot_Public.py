@@ -29,7 +29,7 @@ with open("comments_replied_to.txt", "r") as f:
     comments_replied_to = f.read()
     comments_replied_to = comments_replied_to.split("\n")
     comments_replied_to = list(filter(None, comments_replied_to))
-subreddit = reddit.subreddit('CenturyofBlood')
+subreddit = reddit.subreddit('CenturyofBlood+CenturyofBloodMods')
 for comment in subreddit.stream.comments(skip_existing=False):
     comment.refresh()
     if(re.search('/u/maesterbot',comment.body,re.IGNORECASE) and comment.id not in comments_replied_to): #Make sure we're tagged in order to run. Non caps-sensitive.
@@ -38,26 +38,62 @@ for comment in subreddit.stream.comments(skip_existing=False):
 
         if(re.search("Roll",comment.body,re.IGNORECASE)):
             Globals.battleType = "Naval"
-            battleInfo = re.match("(\d\d)([d])(\d\d\d)",comment.body)
+            battleInfo = re.findall("(\d+)([d])(\d+)([\+\-]?\d*)(.*)",comment.body)
             if(battleInfo):
-                print ("Rolling")
-                noDice = int (battleInfo.group(1))
-                sizeDice = int (battleInfo.group(3))
-                number = 0
-                printed = 0
-                while(noDice != number):
-                        printed += random.randint(1,sizeDice)
+                roundmessage= ""
+                for j in battleInfo:
+                    print ("Rolling\n\n")
+                    noDice = int(j[0]) #(battleInfo.group(1))
+                    sizeDice = int(j[2]) #(battleInfo.group(3))
+                    if (j[3]):
+                        bonus = int(j[3]) #(battleInfo.group(4))
+                    else:
+                        bonus = 0
+                    name = j[4] #battleInfo.group(5)
+                    number = 0
+                    printedBonus = 0
+                    numberBonus = 0
+                    runningBonus = "("
+        
+                    while(noDice != number):
+                        printed = random.randint(1,sizeDice)
+                        printedBonus += printed
+                        print(noDice)
+                        print(sizeDice)
+                        print(bonus)
+                        print(name)
+                        print(printed)
+                        print(printedBonus)
+                        if (noDice - number == 1):
+                            runningBonus += "{})".format(printed)
+                        else:
+                            runningBonus += "{} + ".format(printed)
                         number += 1
+                        
+                    printedBonus += bonus
+                        
+                    if (bonus > 0):
+                        roundmessage += "{}d{}+{} {}: **{}**".format(noDice,sizeDice,bonus,name,printedBonus)
+                        roundmessage += "\n\n {} + {} \n\n *** \n\n".format(runningBonus,bonus)
+                    elif (bonus < 0):
+                        roundmessage += "{}d{}-{} {}: **{}**".format(noDice,sizeDice,bonus,name,printedBonus)
+                        roundmessage += "\n\n {} - {} \n\n *** \n\n".format(runningBonus,bonus)
+                    elif (noDice > 1):
+                        roundmessage += "{}d{} {}: **{}**".format(noDice,sizeDice,name,printedBonus)
+                        roundmessage += "\n\n {} \n\n *** \n\n".format(runningBonus)
+                    else:
+                        roundmessage += "{}d{} {}: **{}**".format(noDice,sizeDice,name,printedBonus)
+                        roundmessage += "\n\n *** \n\n"
 
-                comment.reply(printed)#Post all at once
+                comment.reply(roundmessage)#Post all at once
                 with open("comments_replied_to.txt", "w") as f:
                     for comment_id in comments_replied_to:
                         f.write(comment_id + "\n")
 
-      
+          
             else:
                 print ("Improperly formatted roll")
-                comment.reply("Improperly formatted Roll. Please format comment as follows (The dice you're rolling must have 3 digits, and the number of dice must have 2 e.g. 0100 and 02) : \n \n Roll \n \n 01d100 \n \n tag MaesterBot")
+                comment.reply("Improperly formatted Roll. Please format comment as follows (The dice you're rolling must have 3 digits, and the number of dice must have 2 e.g. 010 and 02) : \n \n Roll \n \n 01d100 \n \n tag MaesterBot")
                 with open("comments_replied_to.txt", "w") as f:
                     for comment_id in comments_replied_to:
                         f.write(comment_id + "\n")
@@ -66,7 +102,7 @@ for comment in subreddit.stream.comments(skip_existing=False):
 
 
             
-        if(re.search("Naval Battle",comment.body,re.IGNORECASE)):
+        elif(re.search("Naval Battle",comment.body,re.IGNORECASE)):
             Globals.battleType = "Naval"
             battleInfo = re.match("(.*) ([\+\-]\d)\n+(.*) (\d\d\d\d) ([\+\-]\d\d)\n+(.*) ([\+\-]\d)\n+(.*) (\d\d\d\d) ([\+\-]\d\d)",comment.body)
             if(battleInfo):
