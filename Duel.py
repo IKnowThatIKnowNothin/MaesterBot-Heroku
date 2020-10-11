@@ -273,8 +273,19 @@ class Duel:
         
         def run(self,duelInfo):
                 roundCount = 0
-                dueler1 = Dueler.Dueler(duelInfo.group(1),int(duelInfo.group(2)))
-                dueler2 = Dueler.Dueler(duelInfo.group(3),int(duelInfo.group(4)))
+
+                                
+                if(duelInfo.group(2)):
+                        group2 = battleInfo.group(2)
+                else:
+                        group2 = 0
+                if(duelInfo.group(4)):
+                        group4 = battleInfo.group(5)
+                else:
+                        group4 = 0
+                
+                dueler1 = Dueler.Dueler(duelInfo.group(1), int(group2))
+                dueler2 = Dueler.Dueler(duelInfo.group(3), int(group4))
                 battlemessage = "#Duel Between {} and {} \n \n".format(dueler1.name,dueler2.name)
                 battlemessage += "*I am a bot by Skuldakn. Please upvote my comments so I can respond quicker and run faster.* \n \n"
                 battlemessage += "--- \n \n"

@@ -329,9 +329,26 @@ class Battle:
                 defendcas = 0
                 autosurrender = 0
                 
+                if(battleInfo.group(2)):
+                        group2 = battleInfo.group(2)
+                else:
+                        group2 = 0
+                if(battleInfo.group(5)):
+                        group5 = battleInfo.group(5)
+                else:
+                        group5 = 0
+                if(battleInfo.group(7)):
+                        group7 = battleInfo.group(7)
+                else:
+                        group7 = 0
+                if(battleInfo.group(9)):
+                        group10 = battleInfo.group(10)
+                else:
+                        group10 = 0
                 
-                army1 = Army.Army(battleInfo.group(1),int(battleInfo.group(2)), battleInfo.group(3),int(battleInfo.group(4)),int(battleInfo.group(5)))
-                army2 = Army.Army(battleInfo.group(6),int(battleInfo.group(7)), battleInfo.group(8),int(battleInfo.group(9)),int(battleInfo.group(10)))
+                
+                army1 = Army.Army(battleInfo.group(1), int(group2), battleInfo.group(3), int(battleInfo.group(4)), int(group5))
+                army2 = Army.Army(battleInfo.group(6), int(group7), battleInfo.group(8), int(battleInfo.group(9)), int(group10))
 
 
                 if(army1.power > army2.power):

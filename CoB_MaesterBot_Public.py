@@ -104,7 +104,7 @@ for comment in subreddit.stream.comments(skip_existing=False):
             
         elif(re.search("Naval Battle",comment.body,re.IGNORECASE)):
             Globals.battleType = "Naval"
-            battleInfo = re.match("(.*) ([\+\-]\d)\n+(.*) (\d\d\d\d) ([\+\-]\d\d)\n+(.*) ([\+\-]\d)\n+(.*) (\d\d\d\d) ([\+\-]\d\d)",comment.body)
+            battleInfo = re.match("(.*) ([\+\-]?\d*)\n+(.*) (\d+) ([\+\-]?\d*)\n+(.*) ([\+\-]?\d*)\n+(.*) (\d+) ([\+\-]?\d*)",comment.body)
             if(battleInfo):
                 print ("Running Naval battle")
                 battle = Battle.Battle()
@@ -148,7 +148,7 @@ for comment in subreddit.stream.comments(skip_existing=False):
                     
         elif(re.search("Land Battle",comment.body,re.IGNORECASE)):
             Globals.battleType = "Land"
-            battleInfo = re.match("(.*) ([\+\-]\d)\n+(.*) (\d\d\d\d) ([\+\-]\d\d)\n+(.*) ([\+\-]\d)\n+(.*) (\d\d\d\d) ([\+\-]\d\d)",comment.body)
+            battleInfo = re.match("(.*) ([\+\-]?\d*)\n+(.*) (\d+) ([\+\-]?\d*)\n+(.*) ([\+\-]?\d*)\n+(.*) (\d+) ([\+\-]?\d*)",comment.body)
             if(battleInfo):
                 print ("Running Land battle")
                 battle = Battle.Battle()
@@ -192,7 +192,7 @@ for comment in subreddit.stream.comments(skip_existing=False):
 
         elif(re.search("Ambush",comment.body,re.IGNORECASE)):
             Globals.battleType = "Ambush"
-            battleInfo = re.match("(.*) ([\+\-]\d)\n+(.*) (\d\d\d\d) ([\+\-]\d\d)\n+(.*) ([\+\-]\d)\n+(.*) (\d\d\d\d) ([\+\-]\d\d)",comment.body)
+            battleInfo = re.match("(.*) ([\+\-]?\d*)\n+(.*) (\d+) ([\+\-]?\d*)\n+(.*) ([\+\-]?\d*)\n+(.*) (\d+) ([\+\-]?\d*)",comment.body)
             if(battleInfo):
                 print ("Running Ambush battle")
                 battle = Battle.Battle()
@@ -235,7 +235,7 @@ for comment in subreddit.stream.comments(skip_existing=False):
 
         elif(re.search("Assault",comment.body,re.IGNORECASE)):
             Globals.battleType = "Assault"
-            battleInfo = re.match("(.*) ([\+\-]\d)\n+(.*) (\d\d\d\d) ([\+\-]\d\d)\n+(.*) ([\+\-]\d)\n+(.*) (\d\d\d\d) ([\+\-]\d\d)",comment.body)
+            battleInfo = re.match("(.*) ([\+\-]?\d*)\n+(.*) (\d+) ([\+\-]?\d*)\n+(.*) ([\+\-]?\d*)\n+(.*) (\d+) ([\+\-]?\d*)",comment.body)
             if(battleInfo):
                 print ("Running Assault")
                 battle = Battle.Battle()
@@ -279,7 +279,7 @@ for comment in subreddit.stream.comments(skip_existing=False):
 
         elif(re.search("Blunted Duel",comment.body,re.IGNORECASE)):
             Globals.battleType = "Blunted"
-            duelInfo = re.match("(.*) ([\+\-]?\d+)\n+(.*) ([\+\-]?\d+)",comment.body)
+            duelInfo = re.match("(.*) ([\+\-]?*\d*)\n+(.*) ([\+\-]?*\d*)",comment.body)
             if(duelInfo):
                 print ("Running Blunted Duel")
                 duel = Duel.Duel()
@@ -323,7 +323,7 @@ for comment in subreddit.stream.comments(skip_existing=False):
 
         elif(re.search("Live Duel",comment.body,re.IGNORECASE)):
             Globals.battleType = "Live"
-            duelInfo = re.match("(.*) ([\+\-]?\d+)\n+(.*) ([\+\-]?\d+)",comment.body)
+            duelInfo = re.match("(.*) ([\+\-]?*\d*)\n+(.*) ([\+\-]?*\d*)",comment.body)
             if(duelInfo):
                 print ("Running Live Duel")
                 duel = Duel.Duel()
