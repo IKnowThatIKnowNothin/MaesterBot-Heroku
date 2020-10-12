@@ -58,12 +58,7 @@ for comment in subreddit.stream.comments(skip_existing=False):
                     while(noDice != number):
                         printed = random.randint(1,sizeDice)
                         printedBonus += printed
-                        print(noDice)
-                        print(sizeDice)
-                        print(bonus)
                         print(name)
-                        print(printed)
-                        print(printedBonus)
                         if (noDice - number == 1):
                             runningBonus += "{})".format(printed)
                         else:
@@ -93,7 +88,7 @@ for comment in subreddit.stream.comments(skip_existing=False):
           
             else:
                 print ("Improperly formatted roll")
-                comment.reply("Improperly formatted Roll. Please format comment as follows (The dice you're rolling must have 3 digits, and the number of dice must have 2 e.g. 010 and 02) : \n \n Roll \n \n 01d100 \n \n tag MaesterBot")
+                comment.reply("Improperly formatted Roll. Please format comment as follows: \n \n 1d100 \n \n Roll \n \n tag MaesterBot")
                 with open("comments_replied_to.txt", "w") as f:
                     for comment_id in comments_replied_to:
                         f.write(comment_id + "\n")
@@ -137,7 +132,7 @@ for comment in subreddit.stream.comments(skip_existing=False):
                             f.write(comment_id + "\n")
             else:
                 print ("Improperly formatted battle")
-                comment.reply("Improperly formatted battle info. Please format comment as follows (Strength must have 4 digits, and bonus must have 2 e.g. 0100 and 02): \n \nCommanderName + CommanderBonus\n \nAttackerName AttackerStrength +AttackerBonus \n \nCommanderName + CommanderBonus\n \nDefenderName DefenderStrength +DefenderBonus\n \nDramatic Mode (optional) \n \ntag MaesterBot")
+                comment.reply("Improperly formatted battle info. Please format comment as follows: \n \nCommanderName + CommanderBonus\n \nAttackerName AttackerStrength +AttackerBonus \n \nCommanderName + CommanderBonus\n \nDefenderName DefenderStrength +DefenderBonus\n \nDramatic Mode (optional) \n \ntag MaesterBot")
                 with open("comments_replied_to.txt", "w") as f:
                     for comment_id in comments_replied_to:
                         f.write(comment_id + "\n")
@@ -181,7 +176,7 @@ for comment in subreddit.stream.comments(skip_existing=False):
                             f.write(comment_id + "\n")
             else:
                 print ("Improperly formatted battle\n\n")
-                comment.reply("Improperly formatted battle info. Please format comment as follows (Strength must have 4 digits, and bonus must have 2 e.g. 0100 and 02): \n \nCommanderName + CommanderBonus\n \nAttackerName AttackerStrength +AttackerBonus \n \nCommanderName + CommanderBonus\n \nDefenderName DefenderStrength +DefenderBonus\n \nDramatic Mode (optional) \n \ntag MaesterBot")
+                comment.reply("Improperly formatted battle info. Please format comment as follows: \n \nCommanderName + CommanderBonus\n \nAttackerName AttackerStrength +AttackerBonus \n \nCommanderName + CommanderBonus\n \nDefenderName DefenderStrength +DefenderBonus\n \nDramatic Mode (optional) \n \ntag MaesterBot")
                 with open("comments_replied_to.txt", "w") as f:
                     for comment_id in comments_replied_to:
                         f.write(comment_id + "\n")
@@ -225,7 +220,7 @@ for comment in subreddit.stream.comments(skip_existing=False):
                             f.write(comment_id + "\n")
             else:
                 print ("Improperly formatted battle\n\n")
-                comment.reply("Improperly formatted battle info. Please format comment as follows (Strength must have 4 digits, and bonus must have 2 e.g. 0100 and 02): \n \nCommanderName + CommanderBonus\n \nAttackerName AttackerStrength +AttackerBonus \n \nCommanderName + CommanderBonus\n \nDefenderName DefenderStrength +DefenderBonus\n \nDramatic Mode (optional) \n \tag MaesterBot")
+                comment.reply("Improperly formatted battle info. Please format comment as follows: \n \nCommanderName + CommanderBonus\n \nAttackerName AttackerStrength +AttackerBonus \n \nCommanderName + CommanderBonus\n \nDefenderName DefenderStrength +DefenderBonus\n \nDramatic Mode (optional) \n \tag MaesterBot")
                 with open("comments_replied_to.txt", "w") as f:
                     for comment_id in comments_replied_to:
                         f.write(comment_id + "\n")
@@ -268,7 +263,7 @@ for comment in subreddit.stream.comments(skip_existing=False):
                             f.write(comment_id + "\n")
             else:
                 print ("Improperly formatted battle\n\n")
-                comment.reply("Improperly formatted battle info. Please format comment as follows (Strength must have 4 digits, and bonus must have 2 e.g. 0100 and 02): \n \nCommanderName + CommanderBonus\n \nAttackerName AttackerStrength +AttackerBonus \n \nCommanderName + CommanderBonus\n \nDefenderName DefenderStrength +DefenderBonus\n \nDramatic Mode (optional) \n \tag MaesterBot")
+                comment.reply("Improperly formatted battle info. Please format comment as follows: \n \nCommanderName + CommanderBonus\n \nAttackerName AttackerStrength +AttackerBonus \n \nCommanderName + CommanderBonus\n \nDefenderName DefenderStrength +DefenderBonus\n \nDramatic Mode (optional) \n \tag MaesterBot")
                 with open("comments_replied_to.txt", "w") as f:
                     for comment_id in comments_replied_to:
                         f.write(comment_id + "\n")
@@ -279,7 +274,7 @@ for comment in subreddit.stream.comments(skip_existing=False):
 
         elif(re.search("Blunted Duel",comment.body,re.IGNORECASE)):
             Globals.battleType = "Blunted"
-            duelInfo = re.match("(.*) ([\+\-]?*\d*)\n+(.*) ([\+\-]?*\d*)",comment.body)
+            duelInfo = re.match("(.*) ([\+\-]?\d*)\n+(.*) ([\+\-]?\d*)",comment.body)
             if(duelInfo):
                 print ("Running Blunted Duel")
                 duel = Duel.Duel()
@@ -323,7 +318,7 @@ for comment in subreddit.stream.comments(skip_existing=False):
 
         elif(re.search("Live Duel",comment.body,re.IGNORECASE)):
             Globals.battleType = "Live"
-            duelInfo = re.match("(.*) ([\+\-]?*\d*)\n+(.*) ([\+\-]?*\d*)",comment.body)
+            duelInfo = re.match("(.*) ([\+\-]?\d*)\n+(.*) ([\+\-]?\d*)",comment.body)
             if(duelInfo):
                 print ("Running Live Duel")
                 duel = Duel.Duel()
@@ -364,6 +359,6 @@ for comment in subreddit.stream.comments(skip_existing=False):
 
 
         else:
-            comment.reply("Improperly formatted info. Please state which function you wish to use, Land Battle, Naval Battle, Ambush, Assault, Live Duel, or Blunted Duel")
+            comment.reply("Improperly formatted info. Please state which function you wish to use, Roll, Land Battle, Naval Battle, Ambush, Assault, Live Duel, or Blunted Duel")
 
 

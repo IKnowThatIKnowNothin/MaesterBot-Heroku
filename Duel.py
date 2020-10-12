@@ -276,11 +276,11 @@ class Duel:
 
                                 
                 if(duelInfo.group(2)):
-                        group2 = battleInfo.group(2)
+                        group2 = duelInfo.group(2)
                 else:
                         group2 = 0
                 if(duelInfo.group(4)):
-                        group4 = battleInfo.group(5)
+                        group4 = duelInfo.group(4)
                 else:
                         group4 = 0
                 
