@@ -6,3 +6,5 @@ class Globals:
                 battleType = "Land"
                 global duelType
                 duelType = "Blunted"
+                global resultsMode
+                resultsMode = False

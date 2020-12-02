@@ -20,20 +20,21 @@ elif (intro == 2):
 elif (intro == 3):
     print ("I'm programmed to obey the three laws of robotics. I always forget what they are though.\n\n")
 elif (intro == 4):
-    print ("Guess you're not as clever as you thought if you need me to do all this maths.\n\n")
+    print ("Guess you're not as clever as you thought if you need me to do all this maths.\n")
 else:
     print ("Well... that didn't work as well as I thought.\n\n")
 
+print ("---\n")
 Globals.Globals()
 
 with open("comments_replied_to.txt", "r") as f:
     comments_replied_to = f.read()
     comments_replied_to = comments_replied_to.split("\n")
     comments_replied_to = list(filter(None, comments_replied_to))
-subreddit = reddit.subreddit('CenturyofBlood+CenturyofBloodMods')
+subreddit = reddit.subreddit('CenturyofBlood+CenturyofBloodMods+COBEventsTeam')
 for comment in subreddit.stream.comments(skip_existing=False):
     comment.refresh()
-    if(re.search('/u/maesterbot',comment.body,re.IGNORECASE) and comment.id not in comments_replied_to): #Make sure we're tagged in order to run. Non caps-sensitive.
+    if(re.search('/u/maesterbot' or 'u/maesterbot',comment.body,re.IGNORECASE) and comment.id not in comments_replied_to): #Make sure we're tagged in order to run. Non caps-sensitive.
         comments_replied_to.append(comment.id)
 
 
@@ -46,7 +47,7 @@ for comment in subreddit.stream.comments(skip_existing=False):
             sexRoll2 = 0
             sexRoll3 = 0
             generalRoll = random.randint(1,1000)
-            print("Rolling Baby")
+            print("Rolling Baby\n---\n")
             
             if(generalRoll < 31):
                 outcome = "Twins/Multiples"
@@ -316,7 +317,6 @@ for comment in subreddit.stream.comments(skip_existing=False):
             if(battleInfo):
                 roundmessage= ""
                 for j in battleInfo:
-                    print ("Rolling\n\n")
                     bonus = 0
                     noDice = int(j[0]) #(battleInfo.group(1))
                     sizeDice = int(j[2]) #(battleInfo.group(3))
@@ -333,7 +333,7 @@ for comment in subreddit.stream.comments(skip_existing=False):
                     while(noDice != number):
                         printed = random.randint(1,sizeDice)
                         printedBonus += printed
-                        print(name)
+                        print("Rolling ", name, "\n")
                         if (noDice - number == 1):
                             runningBonus += "{})".format(printed)
                         else:
@@ -359,6 +359,83 @@ for comment in subreddit.stream.comments(skip_existing=False):
                 with open("comments_replied_to.txt", "w") as f:
                     for comment_id in comments_replied_to:
                         f.write(comment_id + "\n")
+                print("---\n")
+          
+            else:
+                print ("Improperly formatted roll\n---\n")
+                comment.reply("Improperly formatted Roll. Please format comment as follows: \n \n 1d100 \n \n Roll \n \n tag MaesterBot")
+                with open("comments_replied_to.txt", "w") as f:
+                    for comment_id in comments_replied_to:
+                        f.write(comment_id + "\n")
+            time.sleep(60) #We sleep for 3 minutes after each battle so we don't get screwed by rate limits. Delete this when karma is high enough.
+
+
+
+
+        elif(re.search("Archery",comment.body,re.IGNORECASE)):
+            battleInfo = re.findall("(.*)([\+\-]?\d*)",comment.body)
+            if(battleInfo):
+                archerymessage = "#Archery Contest"
+                archerymessage += "*I am a bot by dino. Please upvote my comments so I can respond quicker and run faster.* \n \n"
+                archerymessage += "--- \n \n"
+                roundmessage = ""
+                step = 1
+                roundover = 7
+                for step in roundover:
+                    roundmessage+="##Round {}".format(step)
+                    for j in battleInfo:
+                        bonus = 0
+                        name = j[0]
+                        printed = random.randint(1,100)
+                        if (j[1]):
+                            bonus = int(j[1]) #(battleInfo.group(4))
+                            printedBonus = printed + bonus
+                            if (printedBonus >100):
+                                printedBonus = 100
+                            roundmessage += "{}: **{}**".format(name,)
+                            roundmessage += "\n\n ({} + {}): {} \n\n *** \n\n".format(printed,bonus,printedBonus)
+                        else:
+                            bonus = 0
+
+                        printed = random.randint(1,100)
+                        
+
+                        roundmessage += "{}d{}+{} {}: **{}**".format(noDice,sizeDice,bonus,name,printedBonus)
+                        roundmessage += "\n\n {} + {} \n\n *** \n\n".format(runningBonus,bonus)
+                        number = 0
+                        printedBonus = 0
+                        numberBonus = 0
+                        runningBonus = "("
+            
+                        while(noDice != number):
+                            printed = random.randint(1,sizeDice)
+                            printedBonus += printed
+                            print(name)
+                            if (noDice - number == 1):
+                                runningBonus += "{})".format(printed)
+                            else:
+                                runningBonus += "{} + ".format(printed)
+                            number += 1
+                            
+                        printedBonus += bonus
+                            
+                        if (bonus > 0):
+                            roundmessage += "{}d{}+{} {}: **{}**".format(noDice,sizeDice,bonus,name,printedBonus)
+                            roundmessage += "\n\n {} + {} \n\n *** \n\n".format(runningBonus,bonus)
+                        elif (bonus < 0):
+                            roundmessage += "{}d{}-{} {}: **{}**".format(noDice,sizeDice,bonus,name,printedBonus)
+                            roundmessage += "\n\n {} {} \n\n *** \n\n".format(runningBonus,bonus)
+                        elif (noDice > 1):
+                            roundmessage += "{}d{} {}: **{}**".format(noDice,sizeDice,name,printedBonus)
+                            roundmessage += "\n\n {} \n\n *** \n\n".format(runningBonus)
+                        else:
+                            roundmessage += "{}d{} {}: **{}**".format(noDice,sizeDice,name,printedBonus)
+                            roundmessage += "\n\n *** \n\n"
+
+                comment.reply(roundmessage)#Post all at once
+                with open("comments_replied_to.txt", "w") as f:
+                    for comment_id in comments_replied_to:
+                        f.write(comment_id + "\n")
 
           
             else:
@@ -369,17 +446,15 @@ for comment in subreddit.stream.comments(skip_existing=False):
                         f.write(comment_id + "\n")
             time.sleep(60) #We sleep for 3 minutes after each battle so we don't get screwed by rate limits. Delete this when karma is high enough.
 
-
-
             
         elif(re.search("Naval Battle",comment.body,re.IGNORECASE)):
             Globals.battleType = "Naval"
             battleInfo = re.match("(.*) ([\+\-]?\d*)\n+(.*) (\d+) ([\+\-]?\d*)\n+(.*) ([\+\-]?\d*)\n+(.*) (\d+) ([\+\-]?\d*)",comment.body)
             if(battleInfo):
-                print ("Running Naval battle")
+                print ("Running Naval battle\n")
                 battle = Battle.Battle()
                 if(re.search("Dramatic Mode",comment.body,re.IGNORECASE)):
-                    print ("Dramatic")
+                    print ("Dramatic Mode\n")
                     lastcomment = comment
                     comments_replied_to.append(lastcomment.id)
                     for roundCount in battle.run(battleInfo).split("---"):
@@ -398,15 +473,16 @@ for comment in subreddit.stream.comments(skip_existing=False):
                                 for comment_id in comments_replied_to:
                                     f.write(comment_id + "\n")
                         time.sleep(60)
-                    print ("Done\n\n")
                 else:
-                    print ("Boring\n\n")
+                    print ("Quick Mode\n")
                     comment.reply(battle.run(battleInfo))#Post all at once
                     with open("comments_replied_to.txt", "w") as f:
                         for comment_id in comments_replied_to:
                             f.write(comment_id + "\n")
+
+                print("---\n")
             else:
-                print ("Improperly formatted battle")
+                print ("Improperly formatted battle\n---\n")
                 comment.reply("Improperly formatted battle info. Please format comment as follows: \n \nCommanderName + CommanderBonus\n \nAttackerName AttackerStrength +AttackerBonus \n \nCommanderName + CommanderBonus\n \nDefenderName DefenderStrength +DefenderBonus\n \nDramatic Mode (optional) \n \ntag MaesterBot")
                 with open("comments_replied_to.txt", "w") as f:
                     for comment_id in comments_replied_to:
@@ -420,10 +496,10 @@ for comment in subreddit.stream.comments(skip_existing=False):
             Globals.battleType = "Land"
             battleInfo = re.match("(.*) ([\+\-]?\d*)\n+(.*) (\d+) ([\+\-]?\d*)\n+(.*) ([\+\-]?\d*)\n+(.*) (\d+) ([\+\-]?\d*)",comment.body)
             if(battleInfo):
-                print ("Running Land battle")
+                print ("Running Land battle\n")
                 battle = Battle.Battle()
                 if(re.search("Dramatic Mode",comment.body,re.IGNORECASE)):
-                    print ("Dramatic")
+                    print ("Dramatic Mode\n")
                     lastcomment = comment
                     comments_replied_to.append(lastcomment.id)
                     for roundCount in battle.run(battleInfo).split("---"):
@@ -442,15 +518,15 @@ for comment in subreddit.stream.comments(skip_existing=False):
                                 for comment_id in comments_replied_to:
                                     f.write(comment_id + "\n")
                         time.sleep(60)
-                    print ("Done\n\n")
                 else:
-                    print ("Boring\n\n")
+                    print ("Quick Mode\n")
                     comment.reply(battle.run(battleInfo))#Post all at once
                     with open("comments_replied_to.txt", "w") as f:
                         for comment_id in comments_replied_to:
                             f.write(comment_id + "\n")
+                print("---\n")
             else:
-                print ("Improperly formatted battle\n\n")
+                print ("Improperly formatted battle\n---\n")
                 comment.reply("Improperly formatted battle info. Please format comment as follows: \n \nCommanderName + CommanderBonus\n \nAttackerName AttackerStrength +AttackerBonus \n \nCommanderName + CommanderBonus\n \nDefenderName DefenderStrength +DefenderBonus\n \nDramatic Mode (optional) \n \ntag MaesterBot")
                 with open("comments_replied_to.txt", "w") as f:
                     for comment_id in comments_replied_to:
@@ -464,10 +540,10 @@ for comment in subreddit.stream.comments(skip_existing=False):
             Globals.battleType = "Ambush"
             battleInfo = re.match("(.*) ([\+\-]?\d*)\n+(.*) (\d+) ([\+\-]?\d*)\n+(.*) ([\+\-]?\d*)\n+(.*) (\d+) ([\+\-]?\d*)",comment.body)
             if(battleInfo):
-                print ("Running Ambush battle")
+                print ("Running Ambush battle\n")
                 battle = Battle.Battle()
                 if(re.search("Dramatic Mode",comment.body,re.IGNORECASE)):
-                    print ("Dramatic")
+                    print ("Dramatic Mode\n")
                     lastcomment = comment
                     comments_replied_to.append(lastcomment.id)
                     for roundCount in battle.run(battleInfo).split("---"):
@@ -486,15 +562,15 @@ for comment in subreddit.stream.comments(skip_existing=False):
                                 for comment_id in comments_replied_to:
                                     f.write(comment_id + "\n")
                         time.sleep(60)
-                    print ("Done\n\n")
                 else:
-                    print ("Boring\n\n")
+                    print ("Quick Mode\n")
                     comment.reply(battle.run(battleInfo))#Post all at once
                     with open("comments_replied_to.txt", "w") as f:
                         for comment_id in comments_replied_to:
                             f.write(comment_id + "\n")
+                print("\n---\n")
             else:
-                print ("Improperly formatted battle\n\n")
+                print ("Improperly formatted battle\n---\n")
                 comment.reply("Improperly formatted battle info. Please format comment as follows: \n \nCommanderName + CommanderBonus\n \nAttackerName AttackerStrength +AttackerBonus \n \nCommanderName + CommanderBonus\n \nDefenderName DefenderStrength +DefenderBonus\n \nDramatic Mode (optional) \n \tag MaesterBot")
                 with open("comments_replied_to.txt", "w") as f:
                     for comment_id in comments_replied_to:
@@ -510,7 +586,7 @@ for comment in subreddit.stream.comments(skip_existing=False):
                 print ("Running Assault")
                 battle = Battle.Battle()
                 if(re.search("Dramatic Mode",comment.body,re.IGNORECASE)):
-                    print ("Dramatic")
+                    print ("Dramatic Mode")
                     lastcomment = comment
                     comments_replied_to.append(lastcomment.id)
                     for roundCount in battle.run(battleInfo).split("---"):
@@ -529,15 +605,15 @@ for comment in subreddit.stream.comments(skip_existing=False):
                                 for comment_id in comments_replied_to:
                                     f.write(comment_id + "\n")
                         time.sleep(60)
-                    print ("Done\n\n")
                 else:
-                    print ("Boring\n\n")
+                    print ("Quick Mode\n")
                     comment.reply(battle.run(battleInfo))#Post all at once
                     with open("comments_replied_to.txt", "w") as f:
                         for comment_id in comments_replied_to:
                             f.write(comment_id + "\n")
+                print("---\n")
             else:
-                print ("Improperly formatted battle\n\n")
+                print ("Improperly formatted battle\n---\n")
                 comment.reply("Improperly formatted battle info. Please format comment as follows: \n \nCommanderName + CommanderBonus\n \nAttackerName AttackerStrength +AttackerBonus \n \nCommanderName + CommanderBonus\n \nDefenderName DefenderStrength +DefenderBonus\n \nDramatic Mode (optional) \n \tag MaesterBot")
                 with open("comments_replied_to.txt", "w") as f:
                     for comment_id in comments_replied_to:
@@ -551,10 +627,10 @@ for comment in subreddit.stream.comments(skip_existing=False):
             Globals.battleType = "Blunted"
             duelInfo = re.match("(.*) ([\+\-]?\d*)\n+(.*) ([\+\-]?\d*)",comment.body)
             if(duelInfo):
-                print ("Running Blunted Duel")
+                print ("Running Blunted Duel\n")
                 duel = Duel.Duel()
                 if(re.search("Dramatic Mode",comment.body,re.IGNORECASE)):
-                    print ("Dramatic")
+                    print ("Dramatic Mode\n")
                     lastcomment = comment
                     comments_replied_to.append(lastcomment.id)
                     for roundCount in duel.run(duelInfo).split("---"):
@@ -573,15 +649,24 @@ for comment in subreddit.stream.comments(skip_existing=False):
                                 for comment_id in comments_replied_to:
                                     f.write(comment_id + "\n")
                         time.sleep(30)
-                    print ("Done\n\n")
-                else:
-                    print ("Boring\n\n")
+                    
+                elif(re.search("Results Mode",comment.body,re.IGNORECASE)):
+                    Globals.resultsMode = True
+                    print ("Results Mode\n")
                     comment.reply(duel.run(duelInfo))#Post all at once
                     with open("comments_replied_to.txt", "w") as f:
                         for comment_id in comments_replied_to:
                             f.write(comment_id + "\n")
+                else:
+                    Globals.resultsMode = False
+                    print ("Quick Mode\n")
+                    comment.reply(duel.run(duelInfo))#Post all at once
+                    with open("comments_replied_to.txt", "w") as f:
+                        for comment_id in comments_replied_to:
+                            f.write(comment_id + "\n")
+                print("---\n")
             else:
-                print ("Improperly formatted duel\n\n")
+                print ("Improperly formatted duel\n---\n")
                 comment.reply("Improperly formatted duel info. Please format comment as follows: \n \nName of PC 1 +X \n \nName of PC 2 +X \n \nDramatic Mode (optional) \n \n Live Duel or Blunted Duel \n \ntag MaesterBot")
                 with open("comments_replied_to.txt", "w") as f:
                     for comment_id in comments_replied_to:
@@ -595,10 +680,10 @@ for comment in subreddit.stream.comments(skip_existing=False):
             Globals.battleType = "Live"
             duelInfo = re.match("(.*) ([\+\-]?\d*)\n+(.*) ([\+\-]?\d*)",comment.body)
             if(duelInfo):
-                print ("Running Live Duel")
+                print ("Running Live Duel\n")
                 duel = Duel.Duel()
                 if(re.search("Dramatic Mode",comment.body,re.IGNORECASE)):
-                    print ("Dramatic")
+                    print ("Dramatic Mode\n")
                     lastcomment = comment
                     comments_replied_to.append(lastcomment.id)
                     for roundCount in duel.run(duelInfo).split("---"):
@@ -617,15 +702,25 @@ for comment in subreddit.stream.comments(skip_existing=False):
                                 for comment_id in comments_replied_to:
                                     f.write(comment_id + "\n")
                         time.sleep(30)
-                    print ("Done\n\n")
-                else:
-                    print ("Boring\n\n")
+                    
+                elif(re.search("Results Mode",comment.body,re.IGNORECASE)):
+                    Globals.resultsMode = True
+                    print ("Results Mode\n")
                     comment.reply(duel.run(duelInfo))#Post all at once
                     with open("comments_replied_to.txt", "w") as f:
                         for comment_id in comments_replied_to:
                             f.write(comment_id + "\n")
+                else:
+                    Globals.resultsMode = False
+                    print ("Quick Mode\n")
+                    comment.reply(duel.run(duelInfo))#Post all at once
+                    with open("comments_replied_to.txt", "w") as f:
+                        for comment_id in comments_replied_to:
+                            f.write(comment_id + "\n")
+
+                print("--- \n")
             else:
-                print ("Improperly formatted duel\n\n")
+                print ("\nImproperly formatted duel\n--- \n")
                 comment.reply("Improperly formatted duel info. Please format comment as follows: \n \nName of PC 1 +X \n \nName of PC 2 +X \n \nDramatic Mode (optional) \n \n Live Duel or Blunted Duel \n\ntag MaesterBot")
                 with open("comments_replied_to.txt", "w") as f:
                     for comment_id in comments_replied_to:
@@ -637,10 +732,10 @@ for comment in subreddit.stream.comments(skip_existing=False):
         elif(re.search("Boxing",comment.body,re.IGNORECASE)):
             duelInfo = re.match("(.*) (\d*)\n+(.*) (\d*)",comment.body)
             if(duelInfo):
-                print ("Running Boxing Match")
+                print ("Running Boxing Match\n")
                 box = Boxing.Boxing()
                 if(re.search("Dramatic Mode",comment.body,re.IGNORECASE)):
-                    print ("Dramatic")
+                    print ("Dramatic Mode\n")
                     lastcomment = comment
                     comments_replied_to.append(lastcomment.id)
                     for roundCount in box.run(duelInfo).split("---"):
@@ -659,15 +754,15 @@ for comment in subreddit.stream.comments(skip_existing=False):
                                 for comment_id in comments_replied_to:
                                     f.write(comment_id + "\n")
                         time.sleep(30)
-                    print ("Done\n\n")
                 else:
-                    print ("Boring\n\n")
+                    print ("Quick Mode\n")
                     comment.reply(box.run(duelInfo))#Post all at once
                     with open("comments_replied_to.txt", "w") as f:
                         for comment_id in comments_replied_to:
                             f.write(comment_id + "\n")
+                print("---\n")
             else:
-                print ("Improperly formatted box\n\n")
+                print ("Improperly formatted boxing match\n---\n")
                 comment.reply("Improperly formatted duel info. Please format comment as follows: \n \nName of PC 1  Health \n \nName of PC 2  Health \n \nDramatic Mode (optional) \n \n Live Duel or Blunted Duel \n \ntag MaesterBot")
                 with open("comments_replied_to.txt", "w") as f:
                     for comment_id in comments_replied_to:
@@ -678,6 +773,7 @@ for comment in subreddit.stream.comments(skip_existing=False):
 
 
         else:
-            comment.reply("Improperly formatted info. Please state which function you wish to use, Roll, Land Battle, Naval Battle, Ambush, Assault, Live Duel, or Blunted Duel")
+            comment.reply("Improperly formatted info. Please state which function you wish to use; Roll, Land Battle, Naval Battle, Ambush, Assault, Boxing, Live Duel, or Blunted Duel")
+            print("Improperly formatted info\n---\n")
 
 

@@ -289,9 +289,14 @@ class Duel:
                 battlemessage = "#Duel Between {} and {} \n \n".format(dueler1.name,dueler2.name)
                 battlemessage += "*I am a bot by Skuldakn. Please upvote my comments so I can respond quicker and run faster.* \n \n"
                 battlemessage += "--- \n \n"
+                notbattlemessage = ""
                 while(dueler1.continueFighting and dueler2.continueFighting):
-                        battlemessage += self.run_round(dueler1,dueler2,roundCount)
-                        roundCount += 1
+                        if(Globals.resultsMode):
+                                notbattlemessage += self.run_round(dueler1,dueler2,roundCount)
+                                roundCount += 1
+                        else:
+                                battlemessage += self.run_round(dueler1,dueler2,roundCount)
+                                roundCount += 1
                         
                 if(dueler1.continueFighting):
                         battlemessage += "**Winner: {}**\n \n".format(dueler1.name)
@@ -303,11 +308,74 @@ class Duel:
                         battlemessage += "Both combatants are killed in the duel.\n\n"
                 if(dueler1.alive == False):
                         battlemessage += "{} is killed in the duel. Their opponent emerges with {} major, {} moderate and {} minor injuries.\n\n".format(dueler1.name,dueler2.majorInjuries,dueler2.moderateInjuries,dueler2.minorInjuries)
+                        if(dueler2.permanentInjuries != "None"):
+                                if(dueler2.permanentInjuries == "Hand"):
+                                        battlemessage += "{} suffers a permanent injury and loses a hand/arm in the duel.\n\n".format(dueler2.name)
+                                elif(dueler2.permanentInjuries == "Foot"):
+                                        battlemessage += "{} suffers a permanent injury and loses a leg/foot in the duel.\n\n".format(dueler2.name)
+                                elif(dueler2.permanentInjuries == "Blinded"):
+                                        battlemessage += "{} suffers a permanent injury and is permanently blinded in one eye from the duel.\n\n".format(dueler2.name)
+                                elif(dueler2.permanentInjuries == "Deafened"):
+                                        battlemessage += "{} suffers a permanent injury and is partially/fully loses their hearing from the duel.\n\n".format(dueler2.name)
+                                elif(dueler2.permanentInjuries == "Internal"):
+                                        battlemessage += "{} suffers a permanent injury and suffers internal organ damage from the duel.\n\n".format(dueler2.name)
+                                elif(dueler2.permanentInjuries == "Scar"):
+                                        battlemessage += "{} suffers a permanent injury and gets intensely scarred from the duel.\n\n".format(dueler2.name)
+                                elif(dueler2.permanentInjuries == "Genital"):
+                                        battlemessage += "{} suffers a permanent injury and suffers a genital wound from the duel.\n\n".format(dueler2.name)
                 elif(dueler2.alive == False):
                         battlemessage += "{} is killed in the duel. Their opponent emerges with {} major, {} moderate and {} minor injuries.\n\n".format(dueler2.name,dueler1.majorInjuries,dueler1.moderateInjuries,dueler1.minorInjuries)
+                        if(dueler1.permanentInjuries != "None"):
+                                if(dueler1.permanentInjuries == "Hand"):
+                                        battlemessage += "{} suffers a permanent injury and loses a hand/arm in the duel.\n\n".format(dueler1.name)
+                                elif(dueler1.permanentInjuries == "Foot"):
+                                        battlemessage += "{} suffers a permanent injury and loses a leg/foot in the duel.\n\n".format(dueler1.name)
+                                elif(dueler1.permanentInjuries == "Blinded"):
+                                        battlemessage += "{} suffers a permanent injury and is permanently blinded in one eye from the duel.\n\n".format(dueler1.name)
+                                elif(dueler1.permanentInjuries == "Deafened"):
+                                        battlemessage += "{} suffers a permanent injury and is partially/fully loses their hearing from the duel.\n\n".format(dueler1.name)
+                                elif(dueler1.permanentInjuries == "Internal"):
+                                        battlemessage += "{} suffers a permanent injury and suffers internal organ damage from the duel.\n\n".format(dueler1.name)
+                                elif(dueler1.permanentInjuries == "Scar"):
+                                        battlemessage += "{} suffers a permanent injury and gets intensely scarred from the duel.\n\n".format(dueler1.name)
+                                elif(dueler1.permanentInjuries == "Genital"):
+                                        battlemessage += "{} suffers a permanent injury and suffers a genital wound from the duel.\n\n".format(dueler1.name)
                 else:
                         battlemessage += "{} emerges from the duel with {} major, {} moderate and {} minor injuries.\n\n".format(dueler1.name,dueler1.majorInjuries,dueler1.moderateInjuries,dueler1.minorInjuries)
+                        if(dueler1.permanentInjuries != "None"):
+                                if(dueler1.permanentInjuries == "Hand"):
+                                        battlemessage += "{} suffers a permanent injury and loses a hand/arm in the duel.\n\n".format(dueler1.name)
+                                elif(dueler1.permanentInjuries == "Foot"):
+                                        battlemessage += "{} suffers a permanent injury and loses a leg/foot in the duel.\n\n".format(dueler1.name)
+                                elif(dueler1.permanentInjuries == "Blinded"):
+                                        battlemessage += "{} suffers a permanent injury and is permanently blinded in one eye from the duel.\n\n".format(dueler1.name)
+                                elif(dueler1.permanentInjuries == "Deafened"):
+                                        battlemessage += "{} suffers a permanent injury and is partially/fully loses their hearing from the duel.\n\n".format(dueler1.name)
+                                elif(dueler1.permanentInjuries == "Internal"):
+                                        battlemessage += "{} suffers a permanent injury and suffers internal organ damage from the duel.\n\n".format(dueler1.name)
+                                elif(dueler1.permanentInjuries == "Scar"):
+                                        battlemessage += "{} suffers a permanent injury and gets intensely scarred from the duel.\n\n".format(dueler1.name)
+                                elif(dueler1.permanentInjuries == "Genital"):
+                                        battlemessage += "{} suffers a permanent injury and suffers a genital wound from the duel.\n\n".format(dueler1.name)
                         battlemessage += "{} emerges from the duel with {} major, {} moderate and {} minor injuries.\n\n".format(dueler2.name,dueler2.majorInjuries,dueler2.moderateInjuries,dueler2.minorInjuries)
+                        if(dueler2.permanentInjuries != "None"):
+                                if(dueler2.permanentInjuries == "Hand"):
+                                        battlemessage += "{} suffers a permanent injury and loses a hand/arm in the duel.\n\n".format(dueler2.name)
+                                elif(dueler2.permanentInjuries == "Foot"):
+                                        battlemessage += "{} suffers a permanent injury and loses a leg/foot in the duel.\n\n".format(dueler2.name)
+                                elif(dueler2.permanentInjuries == "Blinded"):
+                                        battlemessage += "{} suffers a permanent injury and is permanently blinded in one eye from the duel.\n\n".format(dueler2.name)
+                                elif(dueler2.permanentInjuries == "Deafened"):
+                                        battlemessage += "{} suffers a permanent injury and is partially/fully loses their hearing from the duel.\n\n".format(dueler2.name)
+                                elif(dueler2.permanentInjuries == "Internal"):
+                                        battlemessage += "{} suffers a permanent injury and suffers internal organ damage from the duel.\n\n".format(dueler2.name)
+                                elif(dueler2.permanentInjuries == "Scar"):
+                                        battlemessage += "{} suffers a permanent injury and gets intensely scarred from the duel.\n\n".format(dueler2.name)
+                                elif(dueler2.permanentInjuries == "Genital"):
+                                        battlemessage += "{} suffers a permanent injury and suffers a genital wound from the duel.\n\n".format(dueler2.name)
+  
+
+
                         
                 ##reset_duel_phase()
                 self.duelPhase = 0
