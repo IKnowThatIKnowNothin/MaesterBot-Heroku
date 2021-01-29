@@ -351,7 +351,11 @@ class Battle:
                 army2 = Army.Army(battleInfo.group(6), int(group7), battleInfo.group(8), int(battleInfo.group(9)), int(group10))
 
 
-                if(army1.power > army2.power):
+                if(army1.power == 0):
+                        autosurrender = 1
+                elif(army2.power == 0):
+                        autosurrender = 2
+                elif(army1.power > army2.power):
                         difference = (army1.power / army2.power) - 1
                         difference *= 100
                         print(difference)
