@@ -8,6 +8,12 @@ import Army
 import random
 import Globals
 
+reddit = praw.Reddit(user_agent='MaesterBot' ,
+                     client_id='iMVpvBtr4OXTfg' ,
+                     client_secret='m7NTK3Fh0QtPEbYXHFGSXh5FjWo' ,
+                     password='norvosgang' ,
+                     username='MaesterBot'
+)
 
 intro = random.randint(1,4)
 if (intro == 1):
@@ -1973,6 +1979,16 @@ for comment in subreddit.stream.comments(skip_existing=False):
                     attractiveness = 18
                 else:
                     attractiveness = trait1+trait2+trait3
+
+                trait1 = random.randint(1,6)
+                trait2 = random.randint(1,6)
+                trait3 = random.randint(1,6)
+                if(dumb == True):
+                    intelligence = 3
+                elif(genius == True):
+                    intelligence = 18
+                else:
+                    intelligence = trait1+trait2+trait3
                     
                 trait1 = random.randint(1,6)
                 trait2 = random.randint(1,6)
@@ -1981,6 +1997,7 @@ for comment in subreddit.stream.comments(skip_existing=False):
 
                 roundmessage += "Strength (without parental modifiers): **{}**\n\n".format(strength)
                 roundmessage += "Attractiveness (without parental modifiers): **{}**\n\n".format(attractiveness)
+                roundmessage += "Intelligence (without parental modifiers): **{}**\n\n".format(intelligence)
                 roundmessage += "Sexuality: **{}**\n\n".format(sexuality)
 
                 trait1 = traits()
