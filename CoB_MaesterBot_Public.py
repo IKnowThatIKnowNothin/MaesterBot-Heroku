@@ -8,12 +8,7 @@ import Army
 import random
 import Globals
 
-reddit = praw.Reddit(user_agent='MaesterBot' ,
-                     client_id='iMVpvBtr4OXTfg' ,
-                     client_secret='m7NTK3Fh0QtPEbYXHFGSXh5FjWo' ,
-                     password='norvosgang' ,
-                     username='MaesterBot'
-)
+
 
 intro = random.randint(1,4)
 if (intro == 1):
