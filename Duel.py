@@ -14,8 +14,8 @@ class Duel:
                 roundmessage = "##**Round {}** \n \n".format(roundCount+1)
                 roll1 = dueler1.attack_roll()
                 roll2 = dueler2.attack_roll()
-                roundmessage += "**{}** Roll: {} ({:+})\n \n".format(dueler1.name,roll1-dueler1.bonus,dueler1.bonus)
-                roundmessage += "**{}** Roll: {} ({:+})\n \n".format(dueler2.name,roll2-dueler2.bonus,dueler2.bonus)
+                roundmessage += "**{}** Roll: {} ({}{:+})\n \n".format(dueler1.name,roll1,roll1-dueler1.bonus,dueler1.bonus)
+                roundmessage += "**{}** Roll: {} ({}{:+})\n \n".format(dueler2.name,roll2,roll2-dueler2.bonus,dueler2.bonus)
 
                 if(roll1 > roll2):
                         difference = roll1-roll2

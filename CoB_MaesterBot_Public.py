@@ -2,13 +2,12 @@ import praw
 import re
 import Battle
 import Duel
+import Joust
 import Boxing
 import time
 import Army
 import random
 import Globals
-
-
 
 intro = random.randint(1,4)
 if (intro == 1):
@@ -1373,18 +1372,18 @@ for comment in subreddit.stream.comments(skip_existing=False):
                 if(multiplesRoll != 0):
                     if(multiplesRoll <= 25):
                         outcome = "Mother dies, twins survive"
-                    elif(muliplesRoll <= 40):
+                    elif(multiplesRoll <= 40):
                         outcome = "Mother dies, one twin dies while the other survives"
-                    elif(muliplesRoll <= 45):
+                    elif(multiplesRoll <= 45):
                         outcome = "Mother and both twins die"
-                    elif(muliplesRoll <= 156):
+                    elif(multiplesRoll <= 156):
                         outcome = "One twin dies"
-                    elif(muliplesRoll <= 175):
+                    elif(multiplesRoll <= 175):
                         outcome = "Both twins die"
-                    elif(muliplesRoll <= 892):
+                    elif(multiplesRoll <= 892):
                         outcome = "Fraternal twins that survive"
                         sexRoll2 = random.randint(1,2)
-                    elif(muliplesRoll <= 996):
+                    elif(multiplesRoll <= 996):
                         outcome = "Identical twins that survive"
                     else:
                         outcome = "Triplets!"
@@ -1992,7 +1991,7 @@ for comment in subreddit.stream.comments(skip_existing=False):
 
                 roundmessage += "Strength (without parental modifiers): **{}**\n\n".format(strength)
                 roundmessage += "Attractiveness (without parental modifiers): **{}**\n\n".format(attractiveness)
-                roundmessage += "Intelligence (without parental modifiers): **{}**\n\n".format(intelligence)
+                roundmessage += "Intelligence: **{}**\n\n".format(intelligence)
                 roundmessage += "Sexuality: **{}**\n\n".format(sexuality)
 
                 trait1 = traits()
@@ -2050,7 +2049,7 @@ for comment in subreddit.stream.comments(skip_existing=False):
                             roundmessage += "{}d{}+{} {}: **{}**".format(noDice,sizeDice,bonus,name,printedBonus)
                             roundmessage += "\n\n {} + {} \n\n *** \n\n".format(runningBonus,bonus)
                         elif (bonus < 0):
-                            roundmessage += "{}d{}-{} {}: **{}**".format(noDice,sizeDice,bonus,name,printedBonus)
+                            roundmessage += "{}d{}{} {}: **{}**".format(noDice,sizeDice,bonus,name,printedBonus)
                             roundmessage += "\n\n {} {} \n\n *** \n\n".format(runningBonus,bonus)
                         elif (noDice > 1):
                             roundmessage += "{}d{} {}: **{}**".format(noDice,sizeDice,name,printedBonus)
@@ -2077,66 +2076,73 @@ for comment in subreddit.stream.comments(skip_existing=False):
 
 
             elif(re.search("Archery",comment.body,re.IGNORECASE)):
-                battleInfo = re.findall("(.*)([\+\-]?\d*)",comment.body)
+                battleInfo = re.findall("(.*) ([\+\-]\d*)",comment.body)
                 if(battleInfo):
-                    archerymessage = "#Archery Contest"
+                    print("Rolling Archery\n\n---")
+                    archerymessage = "#Archery Contest\n\n"
                     archerymessage += "*I am a bot by dino. Please upvote my comments so I can respond quicker and run faster.* \n \n"
                     archerymessage += "--- \n \n"
                     roundmessage = ""
-                    step = 1
-                    roundover = 7
-                    for step in roundover:
-                        roundmessage+="##Round {}".format(step)
-                        for j in battleInfo:
-                            bonus = 0
-                            name = j[0]
-                            printed = random.randint(1,100)
-                            if (j[1]):
-                                bonus = int(j[1]) #(battleInfo.group(4))
-                                printedBonus = printed + bonus
-                                if (printedBonus >100):
-                                    printedBonus = 100
-                                roundmessage += "{}: **{}**".format(name,)
-                                roundmessage += "\n\n ({} + {}): {} \n\n *** \n\n".format(printed,bonus,printedBonus)
-                            else:
-                                bonus = 0
+                    k = 1
 
+                    for j in battleInfo:
+                        k = 1
+                        bonus = 0
+                        if (j[1]):
+                            bonus = int(j[1]) #(battleInfo.group(4))
+                        else:
+                            bonus = 0
+                        name = j[0] #battleInfo.group(5)
+                        printedBonus = ''
+                        numberBonus = 0
+                        points = 0
+                        roundmessage = ""
+                        printedBonus = "("
+                    
+                        while(k <= 7):
                             printed = random.randint(1,100)
+                            printed = printed+bonus
+                            if (printed > 100):
+                                printed = 100
+                            printedBonus += "{}".format(printed)
+                            if (printed <= 50):
+                                points = points + 0
+                            elif (printed <= 55):
+                                points = points + 1
+                            elif (printed <= 60):
+                                points = points + 2
+                            elif (printed <= 65):
+                                points = points + 3
+                            elif (printed <= 70):
+                                points = points + 4
+                            elif (printed <= 75):
+                                points = points + 5
+                            elif (printed <= 80):
+                                points = points + 6
+                            elif (printed <= 85):
+                                points = points + 7
+                            elif (printed <= 90):
+                                points = points + 8
+                            elif (printed <= 95):
+                                points = points + 9
+                            elif (printed <= 99):
+                                points = points + 10
+                            else:
+                                points = points + 20
+                                
+                            if(k != 7):
+                                printedBonus += ", "
                             
 
-                            roundmessage += "{}d{}+{} {}: **{}**".format(noDice,sizeDice,bonus,name,printedBonus)
-                            roundmessage += "\n\n {} + {} \n\n *** \n\n".format(runningBonus,bonus)
-                            number = 0
-                            printedBonus = 0
-                            numberBonus = 0
-                            runningBonus = "("
-                
-                            while(noDice != number):
-                                printed = random.randint(1,sizeDice)
-                                printedBonus += printed
-                                print(name)
-                                if (noDice - number == 1):
-                                    runningBonus += "{})".format(printed)
-                                else:
-                                    runningBonus += "{} + ".format(printed)
-                                number += 1
-                                
-                            printedBonus += bonus
-                                
-                            if (bonus > 0):
-                                roundmessage += "{}d{}+{} {}: **{}**".format(noDice,sizeDice,bonus,name,printedBonus)
-                                roundmessage += "\n\n {} + {} \n\n *** \n\n".format(runningBonus,bonus)
-                            elif (bonus < 0):
-                                roundmessage += "{}d{}-{} {}: **{}**".format(noDice,sizeDice,bonus,name,printedBonus)
-                                roundmessage += "\n\n {} {} \n\n *** \n\n".format(runningBonus,bonus)
-                            elif (noDice > 1):
-                                roundmessage += "{}d{} {}: **{}**".format(noDice,sizeDice,name,printedBonus)
-                                roundmessage += "\n\n {} \n\n *** \n\n".format(runningBonus)
-                            else:
-                                roundmessage += "{}d{} {}: **{}**".format(noDice,sizeDice,name,printedBonus)
-                                roundmessage += "\n\n *** \n\n"
+                            k=k+1
 
-                    comment.reply(roundmessage)#Post all at once
+                        printedBonus += ")"
+                        roundmessage += "**{}** {}: **{} points**".format(name, printedBonus, points)
+                        archerymessage += roundmessage
+                        archerymessage += "\n \n"
+
+
+                    comment.reply(archerymessage)#Post all at once
                     with open("comments_replied_to.txt", "w") as f:
                         for comment_id in comments_replied_to:
                             f.write(comment_id + "\n")
@@ -2428,6 +2434,58 @@ for comment in subreddit.stream.comments(skip_existing=False):
                 else:
                     print ("\nImproperly formatted duel\n--- \n")
                     comment.reply("Improperly formatted duel info. Please format comment as follows: \n \nName of PC 1 +X \n \nName of PC 2 +X \n \nDramatic Mode (optional) \n \n Live Duel or Blunted Duel \n\ntag MaesterBot")
+                    with open("comments_replied_to.txt", "w") as f:
+                        for comment_id in comments_replied_to:
+                            f.write(comment_id + "\n")
+                time.sleep(60) #We sleep for 3 minutes after each duel so we don't get screwed by rate limits. Delete this when karma is high enough.
+
+
+            elif(re.search("Joust",comment.body,re.IGNORECASE)):
+                joustInfo = re.match("(.*) ([\+\-]?\d*)\n+(.*) ([\+\-]?\d*)",comment.body)
+                if(joustInfo):
+                    print ("Running Joust\n")
+                    joust = Joust.Joust()
+                    if(re.search("Dramatic Mode",comment.body,re.IGNORECASE)):
+                        print ("Dramatic Mode\n")
+                        Globals.resultsMode = False
+                        lastcomment = comment
+                        comments_replied_to.append(lastcomment.id)
+                        for roundCount in joust.run(joustInfo).split("---"):
+                            try:
+                                lastcomment = lastcomment.reply(roundCount)
+                                comments_replied_to.append(lastcomment.id)
+                                with open("comments_replied_to.txt", "w") as f:
+                                    for comment_id in comments_replied_to:
+                                        f.write(comment_id + "\n")
+                            except: #Shouldn't happen too much, but in case we get rate limited.
+                                print("Rate limited. Sleeping for 6 minutes.")
+                                time.sleep(360)
+                                lastcomment = lastcomment.reply(roundCount)
+                                comments_replied_to.append(lastcomment.id)
+                                with open("comments_replied_to.txt", "w") as f:
+                                    for comment_id in comments_replied_to:
+                                        f.write(comment_id + "\n")
+                            time.sleep(30)
+                        
+                    elif(re.search("Results Mode",comment.body,re.IGNORECASE)):
+                        Globals.resultsMode = True
+                        print ("Results Mode\n")
+                        comment.reply(joust.run(joustInfo))#Post all at once
+                        with open("comments_replied_to.txt", "w") as f:
+                            for comment_id in comments_replied_to:
+                                f.write(comment_id + "\n")
+                    else:
+                        Globals.resultsMode = False
+                        print ("Quick Mode\n")
+                        comment.reply(joust.run(joustInfo))#Post all at once
+                        with open("comments_replied_to.txt", "w") as f:
+                            for comment_id in comments_replied_to:
+                                f.write(comment_id + "\n")
+
+                    print("--- \n")
+                else:
+                    print ("\nImproperly formatted joust\n--- \n")
+                    comment.reply("Improperly formatted joust info. Please format comment as follows: \n \nName of PC 1 +X \n \nName of PC 2 +X \n \nDramatic Mode (optional) \n \n Live Duel or Blunted Duel \n\ntag MaesterBot")
                     with open("comments_replied_to.txt", "w") as f:
                         for comment_id in comments_replied_to:
                             f.write(comment_id + "\n")
