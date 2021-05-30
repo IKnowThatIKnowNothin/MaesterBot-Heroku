@@ -3,16 +3,19 @@ import random
 class Dueler:
         name = ""
         bonus = 0
+        masterwork = False
         continueFighting = True
         ableToFight = True
+        blockedInjuries = 0
         minorInjuries = 0
         moderateInjuries = 0
         majorInjuries = 0
         permanentInjuries = "None"
         alive = True
-        def __init__(self,name,bonus):
+        def __init__(self,name,bonus,masterwork):
                 self.name = name
                 self.bonus = bonus
+                self.masterwork = masterwork
         def attack_roll(self):
                 return random.randint(1,100) + self.bonus
         def modify_bonus(self,mod):

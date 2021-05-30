@@ -76,7 +76,7 @@ class Duel:
                 if(self.duelPhase == 2):
                         roll = dueler2.injury_roll()
                         dueler2.bonus -= roll
-                        if (roll == 10):
+                        if (roll == 5):
                                 Globals.message = self.numberGen(4)
                                 if(Globals.message == 1):
                                         roundmessage += "{} deflects a blow aimed at their head, and makes a quick thrust giving their opponent a moderate injury.\n \n".format(dueler1.name)
@@ -86,16 +86,29 @@ class Duel:
                                         roundmessage += "{} overpowers their opponent and manages to give them a moderate injury.\n \n".format(dueler1.name)
                                 elif(Globals.message == 4):
                                         roundmessage += "{} leaves themselves open, gaining a moderate injury.\n \n".format(dueler2.name)
-                        elif (roll == 5):
+                        elif (roll == 2):
                                 Globals.message = self.numberGen(4)
-                                if(Globals.message == 1):
-                                        roundmessage += "{} makes a quick attack, leaving their opponent with a minor injury.\n \n".format(dueler1.name)
-                                elif(Globals.message == 2):
-                                        roundmessage += "{} parries a blow and gives their opponent a minor injury.\n \n".format(dueler1.name)
-                                elif(Globals.message == 3):
-                                        roundmessage += "{} quickly lunges, managing to give their opponent a minor injury.\n \n".format(dueler1.name)
-                                elif(Globals.message == 4):
-                                        roundmessage += "{} is a fraction too slow to avoid their opponents blow, getting a minor injury.\n \n".format(dueler2.name)
+                                if (dueler2.masterwork and dueler2.blockedInjuries < 2): #check to see if masterwork. Easier to just do check here, rather than dueler
+                                        if(Globals.message == 1):
+                                                roundmessage += "{} makes a quick attack, but their opponent's masterwork armour blocks the injury.\n \n".format(dueler1.name)
+                                        elif(Globals.message == 2):
+                                                roundmessage += "{} parries a blow and would have given their opponent a minor injury, but their masterwork armour blocks it.\n \n".format(dueler1.name)
+                                        elif(Globals.message == 3):
+                                                roundmessage += "{} quickly lunges, nearly injuring their opponent had the masterwork armour not blocked their attack.\n \n".format(dueler1.name)
+                                        elif(Globals.message == 4):
+                                                roundmessage += "{} is a fraction too slow to avoid their opponents blow, but their masterwork armour prevents an injury.\n \n".format(dueler2.name)
+                                        dueler2.minorInjuries -= 1
+                                        dueler2.bonus += 2
+                                        dueler2.blockedInjuries += 1
+                                else:
+                                        if(Globals.message == 1):
+                                                roundmessage += "{} makes a quick attack, leaving their opponent with a minor injury.\n \n".format(dueler1.name)
+                                        elif(Globals.message == 2):
+                                                roundmessage += "{} parries a blow and gives their opponent a minor injury.\n \n".format(dueler1.name)
+                                        elif(Globals.message == 3):
+                                                roundmessage += "{} quickly lunges, managing to give their opponent a minor injury.\n \n".format(dueler1.name)
+                                        elif(Globals.message == 4):
+                                                roundmessage += "{} is a fraction too slow to avoid their opponents blow, getting a minor injury.\n \n".format(dueler2.name)
                         else:
                                 Globals.message = self.numberGen(4)
                                 if(Globals.message == 1):
@@ -114,7 +127,7 @@ class Duel:
                 elif(self.duelPhase == -2):
                         roll = dueler1.injury_roll()
                         dueler1.bonus -= roll
-                        if (roll == 10):
+                        if (roll == 5):
                                 Globals.message = self.numberGen(4)
                                 if(Globals.message == 1):
                                         roundmessage += "{} deflects a blow aimed at their head, and makes a quick thrust giving their opponent a moderate injury.\n \n".format(dueler2.name)
@@ -124,16 +137,29 @@ class Duel:
                                         roundmessage += "{} overpowers their opponent and manages to give them a moderate injury.\n \n".format(dueler2.name)
                                 elif(Globals.message == 4):
                                         roundmessage += "{} leaves themselves open, gaining a moderate injury.\n \n".format(dueler1.name)
-                        elif (roll == 5):
+                        elif (roll == 2):
                                 Globals.message = self.numberGen(4)
-                                if(Globals.message == 1):
-                                        roundmessage += "{} makes a quick attack, leaving their opponent with a minor injury.\n \n".format(dueler2.name)
-                                elif(Globals.message == 2):
-                                        roundmessage += "{} parries a blow and gives their opponent a minor injury.\n \n".format(dueler2.name)
-                                elif(Globals.message == 3):
-                                        roundmessage += "{} quickly lunges, managing to give their opponent a minor injury.\n \n".format(dueler2.name)
-                                elif(Globals.message == 4):
-                                        roundmessage += "{} is a fraction too slow to avoid their opponents blow, getting a minor injury.\n \n".format(dueler1.name)
+                                if (dueler1.masterwork and dueler1.blockedInjuries < 2): #check to see if masterwork. Easier to just do check here, rather than dueler
+                                        if(Globals.message == 1):
+                                                roundmessage += "{} makes a quick attack, but their opponent's masterwork armour blocks the injury.\n \n".format(dueler2.name)
+                                        elif(Globals.message == 2):
+                                                roundmessage += "{} parries a blow and would have given their opponent a minor injury, but their masterwork armour blocks it.\n \n".format(dueler2.name)
+                                        elif(Globals.message == 3):
+                                                roundmessage += "{} quickly lunges, nearly injuring their opponent had the masterwork armour not blocked their attack.\n \n".format(dueler2.name)
+                                        elif(Globals.message == 4):
+                                                roundmessage += "{} is a fraction too slow to avoid their opponents blow, but their masterwork armour prevents an injury.\n \n".format(dueler1.name)
+                                        dueler1.minorInjuries -= 1
+                                        dueler1.bonus += 2
+                                        dueler1.blockedInjuries += 1
+                                else:
+                                        if(Globals.message == 1):
+                                                roundmessage += "{} makes a quick attack, leaving their opponent with a minor injury.\n \n".format(dueler2.name)
+                                        elif(Globals.message == 2):
+                                                roundmessage += "{} parries a blow and gives their opponent a minor injury.\n \n".format(dueler2.name)
+                                        elif(Globals.message == 3):
+                                                roundmessage += "{} quickly lunges, managing to give their opponent a minor injury.\n \n".format(dueler2.name)
+                                        elif(Globals.message == 4):
+                                                roundmessage += "{} is a fraction too slow to avoid their opponents blow, getting a minor injury.\n \n".format(dueler1.name)
                         else:
                                 Globals.message = self.numberGen(4)
                                 if(Globals.message == 1):
@@ -279,13 +305,23 @@ class Duel:
                         group2 = duelInfo.group(2)
                 else:
                         group2 = 0
-                if(duelInfo.group(4)):
-                        group4 = duelInfo.group(4)
+                if(duelInfo.group(5)):
+                        group5 = duelInfo.group(5)
                 else:
-                        group4 = 0
+                        group5 = 0
+                if(duelInfo.group(3) == " MW"):
+                        group3 = True
+                        print("Duelist 1 Masterwork")
+                else:
+                        group3 = False
+                if(duelInfo.group(6) == " MW"):
+                        group6 = True
+                        print("Duelist 2 Masterwork")
+                else:
+                        group6 = False
                 
-                dueler1 = Dueler.Dueler(duelInfo.group(1), int(group2))
-                dueler2 = Dueler.Dueler(duelInfo.group(3), int(group4))
+                dueler1 = Dueler.Dueler(duelInfo.group(1), int(group2), bool(group3))
+                dueler2 = Dueler.Dueler(duelInfo.group(4), int(group5), bool(group6))
                 battlemessage = "#Duel Between {} and {} \n \n".format(dueler1.name,dueler2.name)
                 battlemessage += "*I am a bot by Skuldakn. Please upvote my comments so I can respond quicker and run faster.* \n \n"
                 battlemessage += "--- \n \n"
@@ -307,7 +343,10 @@ class Duel:
                 if(dueler1.alive == False and dueler2.alive == False):
                         battlemessage += "Both combatants are killed in the duel.\n\n"
                 if(dueler1.alive == False):
-                        battlemessage += "{} is killed in the duel. Their opponent emerges with {} major, {} moderate and {} minor injuries.\n\n".format(dueler1.name,dueler2.majorInjuries,dueler2.moderateInjuries,dueler2.minorInjuries)
+                        if(dueler2.masterwork):
+                                battlemessage += "{} is killed in the duel. Their opponent emerges with {} major, {} moderate and {} minor injuries, and {} minor injuries blocked by masterwork armour.\n\n".format(dueler1.name,dueler2.majorInjuries,dueler2.moderateInjuries,dueler2.minorInjuries,dueler2.blockedInjuries)
+                        else:
+                                battlemessage += "{} is killed in the duel. Their opponent emerges with {} major, {} moderate and {} minor injuries.\n\n".format(dueler1.name,dueler2.majorInjuries,dueler2.moderateInjuries,dueler2.minorInjuries)
                         if(dueler2.permanentInjuries != "None"):
                                 if(dueler2.permanentInjuries == "Hand"):
                                         battlemessage += "{} suffers a permanent injury and loses a hand/arm in the duel.\n\n".format(dueler2.name)
@@ -324,7 +363,10 @@ class Duel:
                                 elif(dueler2.permanentInjuries == "Genital"):
                                         battlemessage += "{} suffers a permanent injury and suffers a genital wound from the duel.\n\n".format(dueler2.name)
                 elif(dueler2.alive == False):
-                        battlemessage += "{} is killed in the duel. Their opponent emerges with {} major, {} moderate and {} minor injuries.\n\n".format(dueler2.name,dueler1.majorInjuries,dueler1.moderateInjuries,dueler1.minorInjuries)
+                        if(dueler1.masterwork):
+                                battlemessage += "{} is killed in the duel. Their opponent emerges with {} major, {} moderate and {} minor injuries, and {} minor injuries blocked by masterwork armour.\n\n".format(dueler2.name,dueler1.majorInjuries,dueler1.moderateInjuries,dueler1.minorInjuries,dueler1.blockedInjuries)
+                        else:
+                                battlemessage += "{} is killed in the duel. Their opponent emerges with {} major, {} moderate and {} minor injuries.\n\n".format(dueler2.name,dueler1.majorInjuries,dueler1.moderateInjuries,dueler1.minorInjuries)
                         if(dueler1.permanentInjuries != "None"):
                                 if(dueler1.permanentInjuries == "Hand"):
                                         battlemessage += "{} suffers a permanent injury and loses a hand/arm in the duel.\n\n".format(dueler1.name)
@@ -341,7 +383,10 @@ class Duel:
                                 elif(dueler1.permanentInjuries == "Genital"):
                                         battlemessage += "{} suffers a permanent injury and suffers a genital wound from the duel.\n\n".format(dueler1.name)
                 else:
-                        battlemessage += "{} emerges from the duel with {} major, {} moderate and {} minor injuries.\n\n".format(dueler1.name,dueler1.majorInjuries,dueler1.moderateInjuries,dueler1.minorInjuries)
+                        if(dueler1.masterwork):
+                                battlemessage += "{} emerges from the duel with {} major, {} moderate and {} minor injuries, and {} minor injuries blocked by masterwork armour.\n\n".format(dueler1.name,dueler1.majorInjuries,dueler1.moderateInjuries,dueler1.minorInjuries,dueler1.blockedInjuries)
+                        else: 
+                                battlemessage += "{} emerges from the duel with {} major, {} moderate and {} minor injuries.\n\n".format(dueler1.name,dueler1.majorInjuries,dueler1.moderateInjuries,dueler1.minorInjuries)
                         if(dueler1.permanentInjuries != "None"):
                                 if(dueler1.permanentInjuries == "Hand"):
                                         battlemessage += "{} suffers a permanent injury and loses a hand/arm in the duel.\n\n".format(dueler1.name)
@@ -357,7 +402,10 @@ class Duel:
                                         battlemessage += "{} suffers a permanent injury and gets intensely scarred from the duel.\n\n".format(dueler1.name)
                                 elif(dueler1.permanentInjuries == "Genital"):
                                         battlemessage += "{} suffers a permanent injury and suffers a genital wound from the duel.\n\n".format(dueler1.name)
-                        battlemessage += "{} emerges from the duel with {} major, {} moderate and {} minor injuries.\n\n".format(dueler2.name,dueler2.majorInjuries,dueler2.moderateInjuries,dueler2.minorInjuries)
+                        if(dueler2.masterwork):
+                                battlemessage += "{} emerges from the duel with {} major, {} moderate and {} minor injuries, and {} minor injuries blocked by masterwork armour.\n\n".format(dueler2.name,dueler2.majorInjuries,dueler2.moderateInjuries,dueler2.minorInjuries,dueler2.blockedInjuries)
+                        else:
+                                battlemessage += "{} emerges from the duel with {} major, {} moderate and {} minor injuries.\n\n".format(dueler2.name,dueler2.majorInjuries,dueler2.moderateInjuries,dueler2.minorInjuries)
                         if(dueler2.permanentInjuries != "None"):
                                 if(dueler2.permanentInjuries == "Hand"):
                                         battlemessage += "{} suffers a permanent injury and loses a hand/arm in the duel.\n\n".format(dueler2.name)

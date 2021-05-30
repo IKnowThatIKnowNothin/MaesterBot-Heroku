@@ -14,13 +14,16 @@ class Joust:
                 roundmessage = "##**Tilt {}** \n \n".format(roundCount+1)
                 roll1 = jouster1.attack_roll()
                 roll2 = jouster2.attack_roll()
-                roundmessage += "**{}** Roll: {} ({}{:+})\n \n".format(jouster1.name,roll1,roll1-jouster1.bonus,jouster1.bonus)
-                roundmessage += "**{}** Roll: {} ({}{:+})\n \n".format(jouster2.name,roll2,roll2-jouster2.bonus,jouster2.bonus)
+                unmodded1 = roll1-jouster1.bonus
+                unmodded2 = roll2-jouster2.bonus
+                roundmessage += "**{}** Roll: {} ({}{:+})\n \n".format(jouster1.name,roll1,unmodded1,jouster1.bonus)
+                roundmessage += "**{}** Roll: {} ({}{:+})\n \n".format(jouster2.name,roll2,unmodded2,jouster2.bonus)
 
                 if(roll1 > roll2):
                         difference = roll1-roll2
+                        unmoddedDiff = unmodded1-unmodded2
 
-                        if(difference >= 95):
+                        if(unmoddedDiff >= 95):
                                 jouster2.death_roll()
                                 Globals.message = self.numberGen(4)
                                 if(Globals.message == 1):
@@ -105,8 +108,9 @@ class Joust:
 
                 else:
                         difference = roll2-roll1
+                        unmoddedDiff = unmodded2-unmodded1
                         
-                        if(difference >= 95):
+                        if(unmoddedDiff >= 95):
                                 jouster1.death_roll()
                                 Globals.message = self.numberGen(4)
                                 if(Globals.message == 1):
@@ -247,7 +251,7 @@ class Joust:
                 if(jouster1.alive == False):
                         battlemessage += "{} is killed in the joust.\n\n".format(jouster1.name)
                 elif(jouster2.alive == False):
-                        battlemessage += "{} is killed in the duel.\n\n".format(jouster2.name)
+                        battlemessage += "{} is killed in the joust.\n\n".format(jouster2.name)
                 else:
                         
                         if(jouster1.injuryRoll != 0):

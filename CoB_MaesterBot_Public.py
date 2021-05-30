@@ -1329,7 +1329,7 @@ for comment in subreddit.stream.comments(skip_existing=False):
     try:
         comment.refresh()
     
-        if(re.search('/u/maesterbot' or 'u/maesterbot',comment.body,re.IGNORECASE) and comment.id not in comments_replied_to): #Make sure we're tagged in order to run. Non caps-sensitive.
+        if(re.search('/u/cobbattlebot' or 'u/cobbattlebot',comment.body,re.IGNORECASE) and comment.id not in comments_replied_to): #Make sure we're tagged in order to run. Non caps-sensitive.
             comments_replied_to.append(comment.id)
 
 
@@ -2335,7 +2335,7 @@ for comment in subreddit.stream.comments(skip_existing=False):
 
             elif(re.search("Blunted Duel",comment.body,re.IGNORECASE)):
                 Globals.battleType = "Blunted"
-                duelInfo = re.match("(.*) ([\+\-]?\d*)\n+(.*) ([\+\-]?\d*)",comment.body)
+                duelInfo = re.match("(.*) ([\+\-]?\d+)(.*)\n+(.*) ([\+\-]?\d+)(.*)",comment.body)
                 if(duelInfo):
                     print ("Running Blunted Duel\n")
                     duel = Duel.Duel()
@@ -2389,7 +2389,7 @@ for comment in subreddit.stream.comments(skip_existing=False):
 
             elif(re.search("Live Duel",comment.body,re.IGNORECASE)):
                 Globals.battleType = "Live"
-                duelInfo = re.match("(.*) ([\+\-]?\d*)\n+(.*) ([\+\-]?\d*)",comment.body)
+                duelInfo = re.match("(.*) ([\+\-]?\d+)(.*)\n+(.*) ([\+\-]?\d+)(.*)",comment.body)
                 if(duelInfo):
                     print ("Running Live Duel\n")
                     duel = Duel.Duel()
@@ -2440,7 +2440,63 @@ for comment in subreddit.stream.comments(skip_existing=False):
                 time.sleep(60) #We sleep for 3 minutes after each duel so we don't get screwed by rate limits. Delete this when karma is high enough.
 
 
+
+            elif(re.search("Continued Joust",comment.body,re.IGNORECASE)):
+                Globals.battleType = "Continued"
+                joustInfo = re.match("(.*) ([\+\-]?\d*)\n+(.*) ([\+\-]?\d*)",comment.body)
+                if(joustInfo):
+                    print ("Running Joust\n")
+                    joust = Joust.Joust()
+                    if(re.search("Dramatic Mode",comment.body,re.IGNORECASE)):
+                        print ("Dramatic Mode\n")
+                        Globals.resultsMode = False
+                        lastcomment = comment
+                        comments_replied_to.append(lastcomment.id)
+                        for roundCount in joust.run(joustInfo).split("---"):
+                            try:
+                                lastcomment = lastcomment.reply(roundCount)
+                                comments_replied_to.append(lastcomment.id)
+                                with open("comments_replied_to.txt", "w") as f:
+                                    for comment_id in comments_replied_to:
+                                        f.write(comment_id + "\n")
+                            except: #Shouldn't happen too much, but in case we get rate limited.
+                                print("Rate limited. Sleeping for 6 minutes.")
+                                time.sleep(360)
+                                lastcomment = lastcomment.reply(roundCount)
+                                comments_replied_to.append(lastcomment.id)
+                                with open("comments_replied_to.txt", "w") as f:
+                                    for comment_id in comments_replied_to:
+                                        f.write(comment_id + "\n")
+                            time.sleep(30)
+                        
+                    elif(re.search("Results Mode",comment.body,re.IGNORECASE)):
+                        Globals.resultsMode = True
+                        print ("Results Mode\n")
+                        comment.reply(joust.run(joustInfo))#Post all at once
+                        with open("comments_replied_to.txt", "w") as f:
+                            for comment_id in comments_replied_to:
+                                f.write(comment_id + "\n")
+                    else:
+                        Globals.resultsMode = False
+                        print ("Quick Mode\n")
+                        comment.reply(joust.run(joustInfo))#Post all at once
+                        with open("comments_replied_to.txt", "w") as f:
+                            for comment_id in comments_replied_to:
+                                f.write(comment_id + "\n")
+
+                    print("--- \n")
+                else:
+                    print ("\nImproperly formatted joust\n--- \n")
+                    comment.reply("Improperly formatted joust info. Please format comment as follows: \n \nName of PC 1 +X \n \nName of PC 2 +X \n \nDramatic Mode (optional) \n \n Live Duel or Blunted Duel \n\ntag MaesterBot")
+                    with open("comments_replied_to.txt", "w") as f:
+                        for comment_id in comments_replied_to:
+                            f.write(comment_id + "\n")
+                time.sleep(60) #We sleep for 3 minutes after each duel so we don't get screwed by rate limits. Delete this when karma is high enough.
+
+
+                
             elif(re.search("Joust",comment.body,re.IGNORECASE)):
+                Globals.battleType = "Joust"
                 joustInfo = re.match("(.*) ([\+\-]?\d*)\n+(.*) ([\+\-]?\d*)",comment.body)
                 if(joustInfo):
                     print ("Running Joust\n")
