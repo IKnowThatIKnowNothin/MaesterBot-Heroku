@@ -1337,7 +1337,7 @@ for comment in subreddit.stream.comments(skip_existing=False):
     try:
         comment.refresh()
     
-        if(re.search('/u/maesterbot' or 'u/maesterbot',comment.body,re.IGNORECASE) and comment.id not in comments_replied_to): #Make sure we're tagged in order to run. Non caps-sensitive.
+        if((re.search('/u/maesterbot',comment.body,re.IGNORECASE) or re.search('u/maesterbot',comment.body,re.IGNORECASE)) and comment.id not in comments_replied_to): #Make sure we're tagged in order to run. Non caps-sensitive.
             comments_replied_to.append(comment.id)
 
 
