@@ -1,1 +1,2 @@
+heroku buildpacks:set heroku/python
 praw==7.1.1
