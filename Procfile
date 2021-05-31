@@ -1,2 +1,1 @@
-web npm install
-worker: node autorun.bat
+worker: python CoB_MaesterBot_Public.py
