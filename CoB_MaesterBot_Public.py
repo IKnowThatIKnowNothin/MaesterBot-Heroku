@@ -9,6 +9,13 @@ import Army
 import random
 import Globals
 
+reddit = praw.Reddit(user_agent=os.environ['AGENT_NAME'] ,
+                     client_id=os.environ['PRAW_ID'] ,
+                     client_secret=os.environ['PRAW_SECRET'] ,
+                     password=os.environ['REDDIT_PW'] ,
+                     username=os.environ['REDDIT_USER']
+)
+
 intro = random.randint(1,4)
 if (intro == 1):
     print ("I'm afraid I can't do that Dave.")
