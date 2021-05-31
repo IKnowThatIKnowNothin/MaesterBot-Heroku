@@ -1,4 +1,5 @@
 import praw
+import os
 import re
 import Battle
 import Duel
