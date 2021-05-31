@@ -1,7 +1,6 @@
 # MaesterBot
-A multi bot for the Century of Blood Community
+A multi bot for the Century of Blood Community. Forked from https://github.com/dinoking88/MaesterBot. Made to be hosted on Heroku.
 
 Python v3.8.2
 praw v7.1.1
 
-Install python and praw, DM dino for the security key for the maesterbot account and add it in, then just run 'autorun.bat'. Super easy!
