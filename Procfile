@@ -1,1 +1,1 @@
-worker: python CoB_MaesterBot_Public.py
+worker: python CoB_ManyFacedBot_Public.py
