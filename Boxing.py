@@ -131,7 +131,7 @@ class Boxing:
                 boxer1 = Boxer.Boxer(duelInfo.group(1), int(group2))
                 boxer2 = Boxer.Boxer(duelInfo.group(3), int(group4))
                 battlemessage = "#Boxing Match Between {} and {} \n \n".format(boxer1.name,boxer2.name)
-                battlemessage += "*I am a bot by dino. Please upvote my comments so I can respond quicker and run faster.* \n \n"
+                battlemessage += "*I am a bot managed and run by the r/CenturyOfBlood modteam. Please upvote my comments so I can respond quicker and run faster.* \n \n"
                 battlemessage += "--- \n \n"
                 while(boxer1.ableToFight and boxer2.ableToFight):
                         battlemessage += self.run_round(boxer1,boxer2,roundCount)
