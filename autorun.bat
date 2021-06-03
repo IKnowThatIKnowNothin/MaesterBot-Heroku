@@ -1,5 +1,5 @@
 @echo off
 color A
-title MaesterBot
-py CoB_MaesterBot_Public.py
+title ManyFacedBot
+py CoB_ManyFacedBot_Public.py
 pause
