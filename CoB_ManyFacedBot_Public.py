@@ -1319,7 +1319,7 @@ with open("comments_replied_to.txt", "r") as f:
     comments_replied_to = comments_replied_to.split("\n")
     comments_replied_to = list(filter(None, comments_replied_to))
 subreddit = reddit.subreddit('CenturyofBlood+CenturyofBloodMods+COBEventsTeam')
-for comment in subreddit.stream.comments(skip_existing=False):
+for comment in subreddit.stream.comments(skip_existing=True):
     try:
         comment.refresh()
     
