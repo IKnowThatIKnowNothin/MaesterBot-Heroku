@@ -220,7 +220,7 @@ class Joust:
                 jouster1 = Jouster.Jouster(joustInfo.group(1), int(group2))
                 jouster2 = Jouster.Jouster(joustInfo.group(3), int(group4))
                 battlemessage = "#Joust Between {} and {} \n \n".format(jouster1.name,jouster2.name)
-                battlemessage += "*I am a bot by dino. Please upvote my comments so I can respond quicker and run faster.* \n \n"
+                battlemessage += "*I am a bot managed and run by the r/CenturyOfBlood modteam. Please upvote my comments so I can respond quicker and run faster.* \n \n"
                 battlemessage += "--- \n \n"
                 notbattlemessage = ""
                 roundOver = True
