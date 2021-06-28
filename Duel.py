@@ -324,6 +324,8 @@ class Duel:
                 dueler2 = Dueler.Dueler(duelInfo.group(4), int(group5), bool(group6))
                 battlemessage = "#Duel Between {} and {} \n \n".format(dueler1.name,dueler2.name)
                 battlemessage += "*I am a bot managed and run by the r/CenturyOfBlood modteam. Please upvote my comments so I can respond quicker and run faster.* \n \n"
+                battlemessage += "\n \n"
+                battlemessage += "Credits: skulkdan, dino_king88 \n \n"
                 battlemessage += "--- \n \n"
                 notbattlemessage = ""
                 while(dueler1.continueFighting and dueler2.continueFighting):
