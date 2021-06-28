@@ -244,6 +244,8 @@ class Joust:
                         
                 if(not roundOver):
                         battlemessage += "**After seven tilts, the Joust ends in a draw.**\n \n"
+                        battlemessage += "{} broke {} lances.\n \n".format(jouster1.name,jouster1.brokenLances)
+                        battlemessage += "{} broke {} lances.\n \n".format(jouster2.name,jouster2.brokenLances)
                 elif(jouster1.continueFighting):
                         battlemessage += "**Winner: {}**\n \n".format(jouster1.name)
                 else:
