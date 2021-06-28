@@ -2075,6 +2075,8 @@ for comment in subreddit.stream.comments(skip_existing=True):
                     print("Rolling Archery\n\n---")
                     archerymessage = "#Archery Contest\n\n"
                     archerymessage += "*I am a bot managed and run by the r/CenturyOfBlood modteam. Please upvote my comments so I can respond quicker and run faster.* \n \n"
+                    archerymessage += "\n \n"
+                    archerymessage += "Credits: skulkdan, dino_king88 \n \n"
                     archerymessage += "--- \n \n"
                     roundmessage = ""
                     k = 1
