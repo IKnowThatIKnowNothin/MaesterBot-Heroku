@@ -464,6 +464,8 @@ class Battle:
                 else:
                         battlemessage = "#Land Battle Between {} and {} \n \n".format(army1.name,army2.name)
                 battlemessage += "*I am a bot managed and run by the r/CenturyOfBlood modteam. Please upvote my comments so I can respond quicker and run faster.* \n \n"
+                battlemessage += "\n \n"
+                battlemessage += "Credits: skulkdan, dino_king88 \n \n"
                 battlemessage += "--- \n \n"
 
                 if(autosurrender == 1):
