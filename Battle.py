@@ -70,7 +70,7 @@ class Battle:
 
 
                         #fun bit of code to determine which phase it is. Logs it in battlePhase, attacker winning adds numbers, defender subtracts with 0 being even
-                        if(Globals.battleType='Naval'):        
+                        if(Globals.battleType == 'Naval'):        
                                 if(roll1 > roll2):
                                         difference = roll1-roll2
 
