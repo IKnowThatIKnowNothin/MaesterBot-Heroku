@@ -26,7 +26,7 @@ class Battle:
                                 elif(Globals.message == 4):
                                         roundmessage += "The {} ships turn to face the enemy as they engage!\n \n".format(army2.name)
                         elif(Globals.battleType == 'Ambush'):
-                                self.battlePhase = 2
+                                self.battlePhase = 999
                                 army2.morale -= 2
                                 Globals.message = random.randint(1,4)
                                 if(Globals.message == 1):
@@ -38,6 +38,7 @@ class Battle:
                                 elif(Globals.message == 4):
                                         roundmessage += "The {} men wait for their enemy to pass before launching their attack!\n \n".format(army1.name)
                         elif(Globals.battleType == 'Assault'):
+                                self.battlePhase = 999
                                 Globals.message = random.randint(1,4)
                                 if(Globals.message == 1):
                                         roundmessage += "{} gives the order to attack the {} walls!\n \n".format(army1.commanderName,army2.name)
@@ -48,7 +49,7 @@ class Battle:
                                 elif(Globals.message == 4):
                                         roundmessage += "The {} men stand ready on the walls, ready to repel the invaders!\n \n".format(army2.name)
                         else:
-                                self.battlePhase = 0
+                                self.battlePhase = 999
                                 Globals.message = random.randint(1,4)
                                 if(Globals.message == 1):
                                         roundmessage += "{} notices {} forces on the horizon, preparing to attack!\n \n".format(army2.commanderName,army1.name)
@@ -412,7 +413,7 @@ class Battle:
                         
 
         def run(self,battleInfo):
-                roundCount = 1
+                roundCount = 0
                 global attackcas
                 global defendcas
                 attackcas = 0
