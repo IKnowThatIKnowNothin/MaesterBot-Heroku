@@ -70,7 +70,7 @@ class Battle:
 
 
                         #fun bit of code to determine which phase it is. Logs it in battlePhase, attacker winning adds numbers, defender subtracts with 0 being even
-                        if(Globals.battleType == 'Naval'):        
+                        if(Globals.battleType=='Naval'):        
                                 if(roll1 > roll2):
                                         difference = roll1-roll2
 
@@ -288,46 +288,46 @@ class Battle:
                                                 roundmessage += "**Winner's Remaining Morale: {}**\n \n".format(army1.morale)
                                                 roundmessage += "Rounds taken: {} \n \n".format(roundCount)
                                 
-                                        elif(roll2>roll1):
-                                                army1.morale -= 1
-                                                if(army1.morale == 1):
-                                                        Globals.message = self.numberGen(4)
-                                                        if(Globals.message == 1):
-                                                                roundmessage += "{} orders a charge, breaking through the {} troops.\n \n".format(army2.commanderName, army1.name)
-                                                        elif(Globals.message == 2):
-                                                                roundmessage += "The {} left flank leave themselves open, allowing their opponent to break through.\n \n".format(army1.name)
-                                                        elif(Globals.message == 3):
-                                                                roundmessage += "{} orders an ill fated charge, allowing the {} army to come down upon them.\n \n".format(army1.commanderName,army2.name)
-                                                        elif(Globals.message == 4):
-                                                                roundmessage += "The right flank of the {} army buckles, allowing their opponent to pour through.\n \n".format(army1.name)
-                                                elif(army1.morale == 2):
-                                                        Globals.message = self.numberGen(4)
-                                                        if(Globals.message == 1):
-                                                                roundmessage += "{} notices a gap in the {} line, and pushes against it.\n \n".format(army2.commanderName, army1.name)
-                                                        elif(Globals.message == 2):
-                                                                roundmessage += "The {} army pushes against their opponents, gaining ground.\n \n".format(army2.name)
-                                                        elif(Globals.message == 3):
-                                                                roundmessage += "{} misjudges an opening, losing ground to their opponent\n \n".format(army1.commanderName)
-                                                        elif(Globals.message == 4):
-                                                                roundmessage += "{} manages to stop the {} flank breaking but their opponent gains more ground.\n \n".format(army1.commanderName,army1.name)                                                 
-                                                else:
-                                                        Globals.message = self.numberGen(4)
-                                                        if(Globals.message == 1):
-                                                                roundmessage += "The {} army hold position, waiting for their opponent to make the next move\n \n".format(army2.name)
-                                                        elif(Globals.message == 2):
-                                                                roundmessage += "The {} army pushes against their opponents, but the {} army doesn't give an inch.\n \n".format(army2.name,army1.name)
-                                                        elif(Globals.message == 3):
-                                                                roundmessage += "{} changes the {} formation, to better fend off their opponent\n \n".format(army2.commanderName,army2.name)
-                                                        elif(Globals.message == 4):
-                                                                roundmessage += "{} notices a gap in the {} line, but {} quickly patches it with more men.\n \n".format(army2.commanderName,army1.name,army2.commanderName) 
-                                                
-                                                if(army1.morale == 0):
-                                                         #Defender Won
-                                                        army1.continueFighting = False
-                                                        roundmessage += "{} defeats {}, bringing an end to the battle.\n \n \n".format(army2.name,army1.name)
-                                                        roundmessage += "**Winner: {}**\n \n".format(army2.name)
-                                                        roundmessage += "**Winner's Remaining Morale: {}**\n \n".format(army2.morale)
-                                                        roundmessage += "Rounds taken: {} \n \n".format(roundCount)                               
+                                elif(roll2>roll1):
+                                        army1.morale -= 1
+                                        if(army1.morale == 1):
+                                                Globals.message = self.numberGen(4)
+                                                if(Globals.message == 1):
+                                                        roundmessage += "{} orders a charge, breaking through the {} troops.\n \n".format(army2.commanderName, army1.name)
+                                                elif(Globals.message == 2):
+                                                        roundmessage += "The {} left flank leave themselves open, allowing their opponent to break through.\n \n".format(army1.name)
+                                                elif(Globals.message == 3):
+                                                        roundmessage += "{} orders an ill fated charge, allowing the {} army to come down upon them.\n \n".format(army1.commanderName,army2.name)
+                                                elif(Globals.message == 4):
+                                                        roundmessage += "The right flank of the {} army buckles, allowing their opponent to pour through.\n \n".format(army1.name)
+                                        elif(army1.morale == 2):
+                                                Globals.message = self.numberGen(4)
+                                                if(Globals.message == 1):
+                                                        roundmessage += "{} notices a gap in the {} line, and pushes against it.\n \n".format(army2.commanderName, army1.name)
+                                                elif(Globals.message == 2):
+                                                        roundmessage += "The {} army pushes against their opponents, gaining ground.\n \n".format(army2.name)
+                                                elif(Globals.message == 3):
+                                                        roundmessage += "{} misjudges an opening, losing ground to their opponent\n \n".format(army1.commanderName)
+                                                elif(Globals.message == 4):
+                                                        roundmessage += "{} manages to stop the {} flank breaking but their opponent gains more ground.\n \n".format(army1.commanderName,army1.name)                                                 
+                                        else:
+                                                Globals.message = self.numberGen(4)
+                                                if(Globals.message == 1):
+                                                        roundmessage += "The {} army hold position, waiting for their opponent to make the next move\n \n".format(army2.name)
+                                                elif(Globals.message == 2):
+                                                        roundmessage += "The {} army pushes against their opponents, but the {} army doesn't give an inch.\n \n".format(army2.name,army1.name)
+                                                elif(Globals.message == 3):
+                                                        roundmessage += "{} changes the {} formation, to better fend off their opponent\n \n".format(army2.commanderName,army2.name)
+                                                elif(Globals.message == 4):
+                                                        roundmessage += "{} notices a gap in the {} line, but {} quickly patches it with more men.\n \n".format(army2.commanderName,army1.name,army2.commanderName) 
+                                        
+                                        if(army1.morale == 0):
+                                                 #Defender Won
+                                                army1.continueFighting = False
+                                                roundmessage += "{} defeats {}, bringing an end to the battle.\n \n \n".format(army2.name,army1.name)
+                                                roundmessage += "**Winner: {}**\n \n".format(army2.name)
+                                                roundmessage += "**Winner's Remaining Morale: {}**\n \n".format(army2.morale)
+                                                roundmessage += "Rounds taken: {} \n \n".format(roundCount)                               
                                  
             
                 #Godamn python globals. Logs the phase to print out and calculate casualties. Each pass through will add casualties onto the previous, making the total.
