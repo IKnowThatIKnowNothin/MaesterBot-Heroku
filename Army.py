@@ -8,6 +8,7 @@ class Army:
         power = 0
         bonus = 0
         continueFighting = True
+        morale = 4
         def __init__(self,commanderName,commanderBonus,name,power,bonus):
                 if (commanderName == "None"):
                         self.commanderName = "The {} Commander".format(name)
