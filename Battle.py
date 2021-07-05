@@ -27,6 +27,7 @@ class Battle:
                                         roundmessage += "The {} ships turn to face the enemy as they engage!\n \n".format(army2.name)
                         elif(Globals.battleType == 'Ambush'):
                                 self.battlePhase = 2
+                                army2.morale -= 2
                                 Globals.message = random.randint(1,4)
                                 if(Globals.message == 1):
                                         roundmessage += "{} notices {} troops rushing out to ambush them!\n \n".format(army2.commanderName,army1.name)
@@ -69,26 +70,185 @@ class Battle:
 
 
                         #fun bit of code to determine which phase it is. Logs it in battlePhase, attacker winning adds numbers, defender subtracts with 0 being even
-                        if(roll1 > roll2):
-                                difference = roll1-roll2
-                                
-                                if(difference >= 96):
-                                        self.battlePhase += 10
-                                        
-                                elif(difference >= 75):
-                                        self.battlePhase += 2
-                                        if(Globals.battleType == 'Naval'):
-                                                Globals.message = self.numberGen(4)
-                                                #message = random.randint(1,4)
-                                                if(Globals.message == 1):
-                                                        roundmessage += "A {} ship rams into one of their opponent's ships, flooding the deck with men.\n \n".format(army1.name)
-                                                elif(Globals.message == 2):
-                                                        roundmessage += "{} orders a volley upon one of the {} ships, bringing death to their opponent.\n \n".format(army1.commanderName,army2.name)
-                                                elif(Globals.message == 3):
-                                                        roundmessage += "{} misjudges where the next attack will come from, leaving several {} ships undefended.\n \n".format(army2.commanderName,army2.name)
-                                                elif(Globals.message == 4):
-                                                        roundmessage += "The {} ships come upon an isolated {} ship, and easily kill those aboard.\n \n".format(army1.name,army2.name)
+                        if(Globals.battleType='Naval'):        
+                                if(roll1 > roll2):
+                                        difference = roll1-roll2
+
+                                        if(difference >= 96):
+                                                self.battlePhase += 10
+
+                                        elif(difference >= 75):
+                                                self.battlePhase += 2
+                                                if(Globals.battleType == 'Naval'):
+                                                        Globals.message = self.numberGen(4)
+                                                        #message = random.randint(1,4)
+                                                        if(Globals.message == 1):
+                                                                roundmessage += "A {} ship rams into one of their opponent's ships, flooding the deck with men.\n \n".format(army1.name)
+                                                        elif(Globals.message == 2):
+                                                                roundmessage += "{} orders a volley upon one of the {} ships, bringing death to their opponent.\n \n".format(army1.commanderName,army2.name)
+                                                        elif(Globals.message == 3):
+                                                                roundmessage += "{} misjudges where the next attack will come from, leaving several {} ships undefended.\n \n".format(army2.commanderName,army2.name)
+                                                        elif(Globals.message == 4):
+                                                                roundmessage += "The {} ships come upon an isolated {} ship, and easily kill those aboard.\n \n".format(army1.name,army2.name)
+                                                else:
+                                                        Globals.message = self.numberGen(4)
+                                                        if(Globals.message == 1):
+                                                                roundmessage += "{} orders a charge, breaking through the {} troops.\n \n".format(army1.commanderName, army2.name)
+                                                        elif(Globals.message == 2):
+                                                                roundmessage += "The {} left flank leave themselves open, allowing their opponent to break through.\n \n".format(army2.name)
+                                                        elif(Globals.message == 3):
+                                                                roundmessage += "{} orders an ill fated charge, allowing the {} army to come down upon them.\n \n".format(army2.commanderName,army1.name)
+                                                        elif(Globals.message == 4):
+                                                                roundmessage += "The right flank of the {} army buckles, allowing their opponent to pour through.\n \n".format(army2.name)
+
+
+                                        elif(difference >= 25):
+                                                self.battlePhase += 1
+                                                if(Globals.battleType == 'Naval'):
+                                                        Globals.message = self.numberGen(4)
+                                                        if(Globals.message == 1):
+                                                                roundmessage += "{} maneuvers their ships to give them an advantage over the {}.\n \n".format(army1.commanderName,army2.name)
+                                                        elif(Globals.message == 2):
+                                                                roundmessage += "The {} ships push forward, outmaneuvering their opponents\n \n".format(army1.name)
+                                                        elif(Globals.message == 3):
+                                                                roundmessage += "{} makes a miscalculation, and leaves their ships in the line of the {} approach.\n \n".format(army2.commanderName,army1.name)
+                                                        elif(Globals.message == 4):
+                                                                roundmessage += "Several {} ships lag behind, allowing their opponent to get the upper hand.\n \n".format(army2.name)
+                                                else:
+                                                        Globals.message = self.numberGen(4)
+                                                        if(Globals.message == 1):
+                                                                roundmessage += "{} notices a gap in the {} line, and pushes against it.\n \n".format(army1.commanderName, army2.name)
+                                                        elif(Globals.message == 2):
+                                                                roundmessage += "The {} army pushes against their opponents, gaining ground.\n \n".format(army1.name)
+                                                        elif(Globals.message == 3):
+                                                                roundmessage += "{} misjudges an opening, losing ground to their opponent\n \n".format(army2.commanderName)
+                                                        elif(Globals.message == 4):
+                                                                roundmessage += "{} manages to stop the {} flank breaking but their opponent gains more ground.\n \n".format(army2.commanderName,army2.name)      
+
+
                                         else:
+
+                                                if(Globals.battleType == 'Naval'):
+                                                        Globals.message = self.numberGen(4)
+                                                        if(Globals.message == 1):
+                                                                roundmessage += "{} holds their ships back, waiting for their oppenent to make the next move.\n \n".format(army1.commanderName)
+                                                        elif(Globals.message == 2):
+                                                                roundmessage += "The {} ships hold their position, waiting for the {} ships to approach.\n \n".format(army1.name,army2.name)
+                                                        elif(Globals.message == 3):
+                                                                roundmessage += "{} orders a charge, but the {} ships are waiting to meet it.\n \n".format(army2.commanderName,army1.name)
+                                                        elif(Globals.message == 4):
+                                                                roundmessage += "The {} ships take stock, ready to meet their opponent.\n \n".format(army1.name)
+                                                else:
+                                                        Globals.message = self.numberGen(4)
+                                                        if(Globals.message == 1):
+                                                                roundmessage += "The {} army hold position, waiting for their opponent to make the next move\n \n".format(army1.name)
+                                                        elif(Globals.message == 2):
+                                                                roundmessage += "The {} army pushes against their opponents, but the {} army doesn't give an inch.\n \n".format(army1.name,army2.name)
+                                                        elif(Globals.message == 3):
+                                                                roundmessage += "{} changes the {} formation, to better fend off their opponent\n \n".format(army1.commanderName,army1.name)
+                                                        elif(Globals.message == 4):
+                                                                roundmessage += "{} notices a gap in the {} line, but {} quickly patches it with more men.\n \n".format(army1.commanderName,army2.name,army2.commanderName)
+
+
+                                        if(self.battlePhase >= 3):
+                                                #Attacker Won
+                                                #Logs that the army cannot fight, bringing the battle to an end.
+                                                army2.continueFighting = False
+                                                roundmessage += "{} defeats {}, bringing an end to the battle.\n \n".format(army1.name,army2.name)
+                                                roundmessage += "**Winner: {}**\n \n".format(army1.name)
+                                                roundmessage += "Rounds taken: {} \n \n".format(roundCount)
+
+
+                                elif(roll2 >= roll1):
+                                        difference = roll2-roll1
+
+                                        if(difference >= 96):
+                                                self.battlePhase -= 10
+
+                                        elif(difference >= 75):
+                                                self.battlePhase -= 2
+                                                if(Globals.battleType == 'Naval'):
+                                                        Globals.message = self.numberGen(4)
+                                                        if(Globals.message == 1):
+                                                                roundmessage += "A {} ship rams into one of their opponent's ships, flooding the deck with men.\n \n".format(army2.name)
+                                                        elif(Globals.message == 2):
+                                                                roundmessage += "{} orders a volley upon one of the {} ships, bringing death to their opponent.\n \n".format(army2.commanderName,army1.name)
+                                                        elif(Globals.message == 3):
+                                                                roundmessage += "{} misjudges where the next attack will come from, leaving several {} ships undefended.\n \n".format(army1.commanderName,army1.name)
+                                                        elif(Globals.message == 4):
+                                                                roundmessage += "The {} ships come upon an isolated {} ship, and easily kill those aboard.\n \n".format(army2.name,army1.name)
+                                                else:
+                                                        Globals.message = self.numberGen(4)
+                                                        if(Globals.message == 1):
+                                                                roundmessage += "{} orders a charge, breaking through the {} troops.\n \n".format(army2.commanderName, army1.name)
+                                                        elif(Globals.message == 2):
+                                                                roundmessage += "The {} left flank leave themselves open, allowing their opponent to break through.\n \n".format(army1.name)
+                                                        elif(Globals.message == 3):
+                                                                roundmessage += "{} orders an ill fated charge, allowing the {} army to come down upon them.\n \n".format(army1.commanderName,army2.name)
+                                                        elif(Globals.message == 4):
+                                                                roundmessage += "The right flank of the {} army buckles, allowing their opponent to pour through.\n \n".format(army1.name)
+
+                                        elif(difference >= 25):
+                                                self.battlePhase -= 1
+                                                if(Globals.battleType == 'Naval'):
+                                                        Globals.message = self.numberGen(4)
+                                                        if(Globals.message == 1):
+                                                                roundmessage += "{} maneuvers their ships to give them an advantage over the {}.\n \n".format(army2.commanderName,army1.name)
+                                                        elif(Globals.message == 2):
+                                                                roundmessage += "The {} ships push forward, outmaneuvering their opponents\n \n".format(army2.name)
+                                                        elif(Globals.message == 3):
+                                                                roundmessage += "{} makes a miscalculation, and leaves their ships in the line of the {} approach.\n \n".format(army1.commanderName,army2.name)
+                                                        elif(Globals.message == 4):
+                                                                roundmessage += "Several {} ships lag behind, allowing their opponent to get the upper hand.\n \n".format(army1.name)
+                                                else:
+                                                        Globals.message = self.numberGen(4)
+                                                        if(Globals.message == 1):
+                                                                roundmessage += "{} notices a gap in the {} line, and pushes against it.\n \n".format(army2.commanderName, army1.name)
+                                                        elif(Globals.message == 2):
+                                                                roundmessage += "The {} army pushes against their opponents, gaining ground.\n \n".format(army2.name)
+                                                        elif(Globals.message == 3):
+                                                                roundmessage += "{} misjudges an opening, losing ground to their opponent\n \n".format(army1.commanderName)
+                                                        elif(Globals.message == 4):
+                                                                roundmessage += "{} manages to stop the {} flank breaking but their opponent gains more ground.\n \n".format(army1.commanderName,army1.name)      
+
+
+                                        else:
+                                                if(Globals.battleType == 'Naval'):
+                                                        Globals.message = self.numberGen(4)
+                                                        if(Globals.message == 1):
+                                                                roundmessage += "{} holds their ships back, waiting for their oppenent to make the next move.\n \n".format(army2.commanderName)
+                                                        elif(Globals.message == 2):
+                                                                roundmessage += "The {} ships hold their position, waiting for the {} ships to approach.\n \n".format(army2.name,army1.name)
+                                                        elif(Globals.message == 3):
+                                                                roundmessage += "{} orders a charge, but the {} ships are waiting to meet it.\n \n".format(army1.commanderName,army2.name)
+                                                        elif(Globals.message == 4):
+                                                                roundmessage += "The {} ships take stock, ready to meet their opponent.\n \n".format(army2.name)
+                                                else:
+                                                        Globals.message = self.numberGen(4)
+                                                        if(Globals.message == 1):
+                                                                roundmessage += "The {} army hold position, waiting for their opponent to make the next move\n \n".format(army2.name)
+                                                        elif(Globals.message == 2):
+                                                                roundmessage += "The {} army pushes against their opponents, but the {} army doesn't give an inch.\n \n".format(army2.name,army1.name)
+                                                        elif(Globals.message == 3):
+                                                                roundmessage += "{} changes the {} formation, to better fend off their opponent\n \n".format(army2.commanderName,army2.name)
+                                                        elif(Globals.message == 4):
+                                                                roundmessage += "{} notices a gap in the {} line, but {} quickly patches it with more men.\n \n".format(army2.commanderName,army1.name,army1.commanderName)
+
+
+
+                                        if(self.battlePhase <= -3):
+                                                 #Defender Won
+                                                army1.continueFighting = False
+                                                roundmessage += "{} defeats {}, bringing an end to the battle.\n \n \n".format(army2.name,army1.name)
+                                                roundmessage += "**Winner: {}**\n \n".format(army2.name)
+                                                roundmessage += "Rounds taken: {} \n \n".format(roundCount)
+                        
+
+                        else: #Stannis Patch segment (lazy coding I know)
+                                self.battlePhase = 999
+                                if(roll1>roll2):
+                                        army2.morale -= 1
+                                        if(army2.morale == 1):
                                                 Globals.message = self.numberGen(4)
                                                 if(Globals.message == 1):
                                                         roundmessage += "{} orders a charge, breaking through the {} troops.\n \n".format(army1.commanderName, army2.name)
@@ -98,21 +258,7 @@ class Battle:
                                                         roundmessage += "{} orders an ill fated charge, allowing the {} army to come down upon them.\n \n".format(army2.commanderName,army1.name)
                                                 elif(Globals.message == 4):
                                                         roundmessage += "The right flank of the {} army buckles, allowing their opponent to pour through.\n \n".format(army2.name)
-                                                 
-                                        
-                                elif(difference >= 25):
-                                        self.battlePhase += 1
-                                        if(Globals.battleType == 'Naval'):
-                                                Globals.message = self.numberGen(4)
-                                                if(Globals.message == 1):
-                                                        roundmessage += "{} maneuvers their ships to give them an advantage over the {}.\n \n".format(army1.commanderName,army2.name)
-                                                elif(Globals.message == 2):
-                                                        roundmessage += "The {} ships push forward, outmaneuvering their opponents\n \n".format(army1.name)
-                                                elif(Globals.message == 3):
-                                                        roundmessage += "{} makes a miscalculation, and leaves their ships in the line of the {} approach.\n \n".format(army2.commanderName,army1.name)
-                                                elif(Globals.message == 4):
-                                                        roundmessage += "Several {} ships lag behind, allowing their opponent to get the upper hand.\n \n".format(army2.name)
-                                        else:
+                                        elif(army2.morale == 2):
                                                 Globals.message = self.numberGen(4)
                                                 if(Globals.message == 1):
                                                         roundmessage += "{} notices a gap in the {} line, and pushes against it.\n \n".format(army1.commanderName, army2.name)
@@ -121,21 +267,7 @@ class Battle:
                                                 elif(Globals.message == 3):
                                                         roundmessage += "{} misjudges an opening, losing ground to their opponent\n \n".format(army2.commanderName)
                                                 elif(Globals.message == 4):
-                                                        roundmessage += "{} manages to stop the {} flank breaking but their opponent gains more ground.\n \n".format(army2.commanderName,army2.name)      
-                                                                                          
-                                        
-                                else:
-                                        
-                                        if(Globals.battleType == 'Naval'):
-                                                Globals.message = self.numberGen(4)
-                                                if(Globals.message == 1):
-                                                        roundmessage += "{} holds their ships back, waiting for their oppenent to make the next move.\n \n".format(army1.commanderName)
-                                                elif(Globals.message == 2):
-                                                        roundmessage += "The {} ships hold their position, waiting for the {} ships to approach.\n \n".format(army1.name,army2.name)
-                                                elif(Globals.message == 3):
-                                                        roundmessage += "{} orders a charge, but the {} ships are waiting to meet it.\n \n".format(army2.commanderName,army1.name)
-                                                elif(Globals.message == 4):
-                                                        roundmessage += "The {} ships take stock, ready to meet their opponent.\n \n".format(army1.name)
+                                                        roundmessage += "{} manages to stop the {} flank breaking but their opponent gains more ground.\n \n".format(army2.commanderName,army2.name)                                                 
                                         else:
                                                 Globals.message = self.numberGen(4)
                                                 if(Globals.message == 1):
@@ -145,157 +277,115 @@ class Battle:
                                                 elif(Globals.message == 3):
                                                         roundmessage += "{} changes the {} formation, to better fend off their opponent\n \n".format(army1.commanderName,army1.name)
                                                 elif(Globals.message == 4):
-                                                        roundmessage += "{} notices a gap in the {} line, but {} quickly patches it with more men.\n \n".format(army1.commanderName,army2.name,army2.commanderName)
+                                                        roundmessage += "{} notices a gap in the {} line, but {} quickly patches it with more men.\n \n".format(army1.commanderName,army2.name,army2.commanderName) 
                                         
-
-                                if(self.battlePhase >= 3):
-                                        #Attacker Won
-                                        #Logs that the army cannot fight, bringing the battle to an end.
-                                        army2.continueFighting = False
-                                        roundmessage += "{} defeats {}, bringing an end to the battle.\n \n".format(army1.name,army2.name)
-                                        roundmessage += "**Winner: {}**\n \n".format(army1.name)
-                                        roundmessage += "Rounds taken: {} \n \n".format(roundCount)
-                                         
-
-                        elif(roll2 >= roll1):
-                                difference = roll2-roll1
+                                        if(army2.morale == 0):
+                                                #Attacker Won
+                                                #Logs that the army cannot fight, bringing the battle to an end.
+                                                army2.continueFighting = False
+                                                roundmessage += "{} defeats {}, bringing an end to the battle.\n \n".format(army1.name,army2.name)
+                                                roundmessage += "**Winner: {}**\n \n".format(army1.name)
+                                                roundmessage += "**Winner's Remaining Morale: {}**\n \n".format(army1.morale)
+                                                roundmessage += "Rounds taken: {} \n \n".format(roundCount)
                                 
-                                if(difference >= 96):
-                                        self.battlePhase -= 10
-                                        
-                                elif(difference >= 75):
-                                        self.battlePhase -= 2
-                                        if(Globals.battleType == 'Naval'):
-                                                Globals.message = self.numberGen(4)
-                                                if(Globals.message == 1):
-                                                        roundmessage += "A {} ship rams into one of their opponent's ships, flooding the deck with men.\n \n".format(army2.name)
-                                                elif(Globals.message == 2):
-                                                        roundmessage += "{} orders a volley upon one of the {} ships, bringing death to their opponent.\n \n".format(army2.commanderName,army1.name)
-                                                elif(Globals.message == 3):
-                                                        roundmessage += "{} misjudges where the next attack will come from, leaving several {} ships undefended.\n \n".format(army1.commanderName,army1.name)
-                                                elif(Globals.message == 4):
-                                                        roundmessage += "The {} ships come upon an isolated {} ship, and easily kill those aboard.\n \n".format(army2.name,army1.name)
-                                        else:
-                                                Globals.message = self.numberGen(4)
-                                                if(Globals.message == 1):
-                                                        roundmessage += "{} orders a charge, breaking through the {} troops.\n \n".format(army2.commanderName, army1.name)
-                                                elif(Globals.message == 2):
-                                                        roundmessage += "The {} left flank leave themselves open, allowing their opponent to break through.\n \n".format(army1.name)
-                                                elif(Globals.message == 3):
-                                                        roundmessage += "{} orders an ill fated charge, allowing the {} army to come down upon them.\n \n".format(army1.commanderName,army2.name)
-                                                elif(Globals.message == 4):
-                                                        roundmessage += "The right flank of the {} army buckles, allowing their opponent to pour through.\n \n".format(army1.name)
-                                                        
-                                elif(difference >= 25):
-                                        self.battlePhase -= 1
-                                        if(Globals.battleType == 'Naval'):
-                                                Globals.message = self.numberGen(4)
-                                                if(Globals.message == 1):
-                                                        roundmessage += "{} maneuvers their ships to give them an advantage over the {}.\n \n".format(army2.commanderName,army1.name)
-                                                elif(Globals.message == 2):
-                                                        roundmessage += "The {} ships push forward, outmaneuvering their opponents\n \n".format(army2.name)
-                                                elif(Globals.message == 3):
-                                                        roundmessage += "{} makes a miscalculation, and leaves their ships in the line of the {} approach.\n \n".format(army1.commanderName,army2.name)
-                                                elif(Globals.message == 4):
-                                                        roundmessage += "Several {} ships lag behind, allowing their opponent to get the upper hand.\n \n".format(army1.name)
-                                        else:
-                                                Globals.message = self.numberGen(4)
-                                                if(Globals.message == 1):
-                                                        roundmessage += "{} notices a gap in the {} line, and pushes against it.\n \n".format(army2.commanderName, army1.name)
-                                                elif(Globals.message == 2):
-                                                        roundmessage += "The {} army pushes against their opponents, gaining ground.\n \n".format(army2.name)
-                                                elif(Globals.message == 3):
-                                                        roundmessage += "{} misjudges an opening, losing ground to their opponent\n \n".format(army1.commanderName)
-                                                elif(Globals.message == 4):
-                                                        roundmessage += "{} manages to stop the {} flank breaking but their opponent gains more ground.\n \n".format(army1.commanderName,army1.name)      
-
-                                                        
-                                else:
-                                        if(Globals.battleType == 'Naval'):
-                                                Globals.message = self.numberGen(4)
-                                                if(Globals.message == 1):
-                                                        roundmessage += "{} holds their ships back, waiting for their oppenent to make the next move.\n \n".format(army2.commanderName)
-                                                elif(Globals.message == 2):
-                                                        roundmessage += "The {} ships hold their position, waiting for the {} ships to approach.\n \n".format(army2.name,army1.name)
-                                                elif(Globals.message == 3):
-                                                        roundmessage += "{} orders a charge, but the {} ships are waiting to meet it.\n \n".format(army1.commanderName,army2.name)
-                                                elif(Globals.message == 4):
-                                                        roundmessage += "The {} ships take stock, ready to meet their opponent.\n \n".format(army2.name)
-                                        else:
-                                                Globals.message = self.numberGen(4)
-                                                if(Globals.message == 1):
-                                                        roundmessage += "The {} army hold position, waiting for their opponent to make the next move\n \n".format(army2.name)
-                                                elif(Globals.message == 2):
-                                                        roundmessage += "The {} army pushes against their opponents, but the {} army doesn't give an inch.\n \n".format(army2.name,army1.name)
-                                                elif(Globals.message == 3):
-                                                        roundmessage += "{} changes the {} formation, to better fend off their opponent\n \n".format(army2.commanderName,army2.name)
-                                                elif(Globals.message == 4):
-                                                        roundmessage += "{} notices a gap in the {} line, but {} quickly patches it with more men.\n \n".format(army2.commanderName,army1.name,army1.commanderName)
-
-
-                                                        
-                                if(self.battlePhase <= -3):
-                                         #Defender Won
-                                         army1.continueFighting = False
-                                         roundmessage += "{} defeats {}, bringing an end to the battle.\n \n \n".format(army2.name,army1.name)
-                                         roundmessage += "**Winner: {}**\n \n".format(army2.name)
-                                         roundmessage += "Rounds taken: {} \n \n".format(roundCount)
-
-
+                                        elif(roll2>roll1):
+                                                army1.morale -= 1
+                                                if(army1.morale == 1):
+                                                        Globals.message = self.numberGen(4)
+                                                        if(Globals.message == 1):
+                                                                roundmessage += "{} orders a charge, breaking through the {} troops.\n \n".format(army2.commanderName, army1.name)
+                                                        elif(Globals.message == 2):
+                                                                roundmessage += "The {} left flank leave themselves open, allowing their opponent to break through.\n \n".format(army1.name)
+                                                        elif(Globals.message == 3):
+                                                                roundmessage += "{} orders an ill fated charge, allowing the {} army to come down upon them.\n \n".format(army1.commanderName,army2.name)
+                                                        elif(Globals.message == 4):
+                                                                roundmessage += "The right flank of the {} army buckles, allowing their opponent to pour through.\n \n".format(army1.name)
+                                                elif(army1.morale == 2):
+                                                        Globals.message = self.numberGen(4)
+                                                        if(Globals.message == 1):
+                                                                roundmessage += "{} notices a gap in the {} line, and pushes against it.\n \n".format(army2.commanderName, army1.name)
+                                                        elif(Globals.message == 2):
+                                                                roundmessage += "The {} army pushes against their opponents, gaining ground.\n \n".format(army2.name)
+                                                        elif(Globals.message == 3):
+                                                                roundmessage += "{} misjudges an opening, losing ground to their opponent\n \n".format(army1.commanderName)
+                                                        elif(Globals.message == 4):
+                                                                roundmessage += "{} manages to stop the {} flank breaking but their opponent gains more ground.\n \n".format(army1.commanderName,army1.name)                                                 
+                                                else:
+                                                        Globals.message = self.numberGen(4)
+                                                        if(Globals.message == 1):
+                                                                roundmessage += "The {} army hold position, waiting for their opponent to make the next move\n \n".format(army2.name)
+                                                        elif(Globals.message == 2):
+                                                                roundmessage += "The {} army pushes against their opponents, but the {} army doesn't give an inch.\n \n".format(army2.name,army1.name)
+                                                        elif(Globals.message == 3):
+                                                                roundmessage += "{} changes the {} formation, to better fend off their opponent\n \n".format(army2.commanderName,army2.name)
+                                                        elif(Globals.message == 4):
+                                                                roundmessage += "{} notices a gap in the {} line, but {} quickly patches it with more men.\n \n".format(army2.commanderName,army1.name,army2.commanderName) 
+                                                
+                                                if(army1.morale == 0):
+                                                         #Defender Won
+                                                        army1.continueFighting = False
+                                                        roundmessage += "{} defeats {}, bringing an end to the battle.\n \n \n".format(army2.name,army1.name)
+                                                        roundmessage += "**Winner: {}**\n \n".format(army2.name)
+                                                        roundmessage += "**Winner's Remaining Morale: {}**\n \n".format(army2.morale)
+                                                        roundmessage += "Rounds taken: {} \n \n".format(roundCount)                               
                                  
             
                 #Godamn python globals. Logs the phase to print out and calculate casualties. Each pass through will add casualties onto the previous, making the total.
                 global attackcas
                 global defendcas
-                if(self.battlePhase >= 3):
-                    phase = 'Defender Routing'
-                    roundmessage += "##**Phase - Defender Routing** \n \n".format(phase)
-                    roundmessage += "--- \n \n"
-                    attackcas += 0
-                    if(Globals.battleType == "Naval"):
-                            defendcas += 8
-                    else:
-                            defendcas += 25
+                if(self.battlePhase == 999):
+                        roundmessage += "**{}** Morale: {} \n \n".format(army1.name,army1.morale)
+                        roundmessage += "**{}** Morale: {} \n \n".format(army2.name,army2.morale)
+                        roundmessage += "--- \n \n"                        
+                elif(self.battlePhase >= 3 and self.battlePhase != 999):
+                        phase = 'Defender Routing'
+                        roundmessage += "##**Phase - Defender Routing** \n \n".format(phase)
+                        roundmessage += "--- \n \n"
+                        attackcas += 0
+                        if(Globals.battleType == "Naval"):
+                                defendcas += 8
+                        else:
+                                defendcas += 25
                 elif(self.battlePhase == 2):
-                    phase = 'Defender Breaking'
-                    roundmessage += "##**Phase - {}** \n \n".format(phase)
-                    roundmessage += "--- \n \n"
-                    attackcas += 0.25
-                    defendcas += 4
+                        phase = 'Defender Breaking'
+                        roundmessage += "##**Phase - {}** \n \n".format(phase)
+                        roundmessage += "--- \n \n"
+                        attackcas += 0.25
+                        defendcas += 4
                 elif(self.battlePhase == 1):
-                    phase = 'Defender Losing'
-                    roundmessage += "##**Phase - {}** \n \n".format(phase)
-                    roundmessage += "--- \n \n"
-                    attackcas += 0.5
-                    defendcas += 2
+                        phase = 'Defender Losing'
+                        roundmessage += "##**Phase - {}** \n \n".format(phase)
+                        roundmessage += "--- \n \n"
+                        attackcas += 0.5
+                        defendcas += 2
                 elif(self.battlePhase == 0):
-                    phase = 'Even'
-                    roundmessage += "##**Phase - {}** \n \n".format(phase)
-                    roundmessage += "--- \n \n"
-                    attackcas += 1
-                    defendcas += 1
+                        phase = 'Even'
+                        roundmessage += "##**Phase - {}** \n \n".format(phase)
+                        roundmessage += "--- \n \n"
+                        attackcas += 1
+                        defendcas += 1
                 elif(self.battlePhase == -1):
-                    phase = 'Attacker Losing'
-                    roundmessage += "##**Phase - {}** \n \n".format(phase)
-                    roundmessage += "--- \n \n"
-                    attackcas += 2
-                    defendcas += 0.5
+                        phase = 'Attacker Losing'
+                        roundmessage += "##**Phase - {}** \n \n".format(phase)
+                        roundmessage += "--- \n \n"
+                        attackcas += 2
+                        defendcas += 0.5
                 elif(self.battlePhase == -2):
-                    phase = 'Attacker Breaking'
-                    roundmessage += "##**Phase - {}** \n \n".format(phase)
-                    roundmessage += "--- \n \n"
-                    attackcas += 4
-                    defendcas += 0.25
+                        phase = 'Attacker Breaking'
+                        roundmessage += "##**Phase - {}** \n \n".format(phase)
+                        roundmessage += "--- \n \n"
+                        attackcas += 4
+                        defendcas += 0.25
                 elif(self.battlePhase <= -3):
-                    phase = 'Attacker Routing'
-                    roundmessage += "##**Phase - Attacker Routing** \n \n".format(phase)
-                    roundmessage += "--- \n \n"
-                    defendcas += 0
-                    if(Globals.battleType == "Naval"):
-                            attackcas += 8
-                            print("Navy")
-                    else:
-                            attackcas += 25
+                        phase = 'Attacker Routing'
+                        roundmessage += "##**Phase - Attacker Routing** \n \n".format(phase)
+                        roundmessage += "--- \n \n"
+                        defendcas += 0
+                        if(Globals.battleType == "Naval"):
+                                attackcas += 8
+                                print("Navy")
+                        else:
+                                attackcas += 25
 
                 #never happened in the sims but just in case casualties reach 100% or higher
                             
@@ -355,7 +445,7 @@ class Battle:
                         autosurrender = 1
                 elif(army2.power == 0):
                         autosurrender = 2
-                elif(army1.power > army2.power):
+                elif(army1.power > army2.power and Globals.battleType == "Naval"):
                         difference = (army1.power / army2.power) - 1
                         difference *= 100
                         print(difference)
@@ -404,7 +494,7 @@ class Battle:
                         else:
                                 autosurrender = 2
 
-                elif(army2.power > army1.power):
+                elif(army2.power > army1.power and Globals.battleType == "Naval"):
                         difference = (army2.power / army1.power) - 1
                         difference *= 100
                         print(difference)
@@ -452,6 +542,70 @@ class Battle:
                                 army2.bonus += 21
                         else:
                                 autosurrender = 1
+                elif(army1.power > army2.power and Globals.battleType == "Land"):
+                        difference = (army1.power / army2.power) - 1
+                        difference *= 100
+                        print(difference)
+                        if(difference <= 25):
+                                army1.bonus += 2
+                        elif(difference <= 50):
+                                army1.bonus += 6
+                        elif(difference <= 100):
+                                army1.bonus += 10
+                        elif(difference <= 150):
+                                army1.bonus += 14
+                        elif(difference <= 200):
+                                army1.bonus += 18
+                        elif(difference <= 300):
+                                army1.bonus += 22
+                        elif(difference <= 400):
+                                army1.bonus += 26
+                        elif(difference <= 500):
+                                army1.bonus += 30
+                        elif(difference <= 600):
+                                army1.bonus += 34
+                        elif(difference <= 700):
+                                army1.bonus += 38
+                        elif(difference <= 800):
+                                army1.bonus += 42
+                        elif(difference <= 900):
+                                army1.bonus += 46
+                        elif(difference <= 1000):
+                                army1.bonus += 50
+                        else:
+                                autosurrender = 2
+                elif(army2.power > army1.power and Globals.battleType == "Land"):
+                        difference = (army2.power / army1.power) - 1
+                        difference *= 100
+                        print(difference)
+                        if(difference <= 25):
+                                army2.bonus += 2
+                        elif(difference <= 50):
+                                army2.bonus += 6
+                        elif(difference <= 100):
+                                army2.bonus += 10
+                        elif(difference <= 150):
+                                army2.bonus += 14
+                        elif(difference <= 200):
+                                army2.bonus += 18
+                        elif(difference <= 300):
+                                army2.bonus += 22
+                        elif(difference <= 400):
+                                army2.bonus += 26
+                        elif(difference <= 500):
+                                army2.bonus += 30
+                        elif(difference <= 600):
+                                army2.bonus += 34
+                        elif(difference <= 700):
+                                army2.bonus += 38
+                        elif(difference <= 800):
+                                army2.bonus += 42
+                        elif(difference <= 900):
+                                army2.bonus += 46
+                        elif(difference <= 1000):
+                                army2.bonus += 50
+                        else:
+                                autosurrender = 1
 
                 
                 if(Globals.battleType == "Naval"):
@@ -486,17 +640,79 @@ class Battle:
                                 battlemessage += "{} Casualties = {}% \n \n{} Casualties = {}%\n \n".format(army1.name,attackcas,army2.name,defendcas)
                                 battlemessage += "--- \n \n"
                         else:
-                                if (army1.commanderBonus == 3):
+                                if(army2.morale == 0):
+                                        if(army1.morale == 4):
+                                                for x in range(2):
+                                                        attackcas += self.numberGen(3)
+                                                attackcas += 1
+                                                for x in range(14):
+                                                        defendcas += self.numberGen(3)
+                                                defendcas += 9
+                                        elif(army1.morale == 3):
+                                                for x in range(4):
+                                                        attackcas += self.numberGen(3)
+                                                attackcas += 3
+                                                for x in range(11):
+                                                        defendcas += self.numberGen(3)
+                                                defendcas += 7
+                                        elif(army1.morale == 2):
+                                                for x in range(5):
+                                                        attackcas += self.numberGen(3)
+                                                attackcas += 4
+                                                for x in range(9):
+                                                        defendcas += self.numberGen(3)
+                                                defendcas += 6 
+                                        elif(army1.morale == 1):
+                                                for x in range(6):
+                                                        attackcas += self.numberGen(3)
+                                                attackcas += 5
+                                                for x in range(7):
+                                                        defendcas += self.numberGen(3)
+                                                defendcas += 5
+                                                
+                                elif(army1.morale == 0):
+                                        if(army2.morale == 4):
+                                                for x in range(2):
+                                                        defendcas += self.numberGen(3)
+                                                defendcas += 1
+                                                for x in range(14):
+                                                        attackcas += self.numberGen(3)
+                                                attackcas += 9
+                                        elif(army2.morale == 3):
+                                                for x in range(4):
+                                                        defendcas += self.numberGen(3)
+                                                defendcas += 3
+                                                for x in range(11):
+                                                        attackcas += self.numberGen(3)
+                                                attackcas += 7
+                                        elif(army2.morale == 2):
+                                                for x in range(5):
+                                                        defendcas += self.numberGen(3)
+                                                defendcas += 4
+                                                for x in range(9):
+                                                        attackcas += self.numberGen(3)
+                                                attackcas += 6 
+                                        elif(army2.morale == 1):
+                                                for x in range(6):
+                                                        defendcas += self.numberGen(3)
+                                                defendcas += 5
+                                                for x in range(7):
+                                                        attackcas += self.numberGen(3)
+                                                attackcas += 5                                 
+                                                
+                                
+                                
+                                if (army1.commanderBonus >= 9):
                                         attcas = attackcas*0.8
-                                        if (army2.commanderBonus == 3):
+                                        if (army2.commanderBonus >= 9):
                                                 defcas = defendcas*0.8
                                                 battlemessage += "{} Casualties = {}% ({}*0.8) \n \n{} Casualties = {}% ({}*0.8)\n \n".format(army1.name,attcas,attackcas,army2.name,defcas,defendcas)
                                                 battlemessage += "--- \n \n"
-                                        elif (army2.commanderBonus == 2):
+                                        elif (army2.commanderBonus == 6):
                                                 defcas = defendcas*0.9
                                                 battlemessage += "{} Casualties = {}% ({}*0.8) \n \n{} Casualties = {}% ({}*0.9)\n \n".format(army1.name,attcas,attackcas,army2.name,defcas,defendcas)
                                                 battlemessage += "--- \n \n"
-                                        elif (army2.commanderBonus == 1):
+                                        elif (army2.commanderBonus == 3):
                                                 defcas = defendcas*0.95
                                                 battlemessage += "{} Casualties = {}% ({}*0.8) \n \n{} Casualties = {}% ({}*0.95)\n \n".format(army1.name,attcas,attackcas,army2.name,defcas,defendcas)
                                                 battlemessage += "--- \n \n"
@@ -504,17 +720,17 @@ class Battle:
                                                 battlemessage += "{} Casualties = {}% ({}*0.8) \n \n{} Casualties = {}%\n \n".format(army1.name,attcas,attackcas,army2.name,defendcas)
                                                 battlemessage += "--- \n \n"
                                                 
-                                elif (army1.commanderBonus == 2):
+                                elif (army1.commanderBonus == 6):
                                         attcas = attackcas*0.9
-                                        if (army2.commanderBonus == 3):
+                                        if (army2.commanderBonus >= 9):
                                                 defcas = defendcas*0.8
                                                 battlemessage += "{} Casualties = {}% ({}*0.9) \n \n{} Casualties = {}% ({}*0.8)\n \n".format(army1.name,attcas,attackcas,army2.name,defcas,defendcas)
                                                 battlemessage += "--- \n \n"
-                                        elif (army2.commanderBonus == 2):
+                                        elif (army2.commanderBonus == 6):
                                                 defcas = defendcas*0.9
                                                 battlemessage += "{} Casualties = {}% ({}*0.9) \n \n{} Casualties = {}% ({}*0.9)\n \n".format(army1.name,attcas,attackcas,army2.name,defcas,defendcas)
                                                 battlemessage += "--- \n \n"
-                                        elif (army2.commanderBonus == 1):
+                                        elif (army2.commanderBonus == 3):
                                                 defcas = defendcas*0.95
                                                 battlemessage += "{} Casualties = {}% ({}*0.9) \n \n{} Casualties = {}% ({}*0.95)\n \n".format(army1.name,attcas,attackcas,army2.name,defcas,defendcas)
                                                 battlemessage += "--- \n \n"
@@ -522,17 +738,17 @@ class Battle:
                                                 battlemessage += "{} Casualties = {}% ({}*0.9) \n \n{} Casualties = {}% \n \n".format(army1.name,attcas,attackcas,army2.name,defendcas)
                                                 battlemessage += "--- \n \n"
                                                 
-                                elif (army1.commanderBonus == 1):
+                                elif (army1.commanderBonus == 3):
                                         attcas = attackcas*0.95
-                                        if (army2.commanderBonus == 3):
+                                        if (army2.commanderBonus >= 9):
                                                 defcas = defendcas*0.8
                                                 battlemessage += "{} Casualties = {}% ({}*0.95) \n \n{} Casualties = {}% ({}*0.8)\n \n".format(army1.name,attcas,attackcas,army2.name,defcas,defendcas)
                                                 battlemessage += "--- \n \n"
-                                        elif (army2.commanderBonus == 2):
+                                        elif (army2.commanderBonus == 6):
                                                 defcas = defendcas*0.9
                                                 battlemessage += "{} Casualties = {}% ({}*0.95) \n \n{} Casualties = {}% ({}*0.9)\n \n".format(army1.name,attcas,attackcas,army2.name,defcas,defendcas)
                                                 battlemessage += "--- \n \n"
-                                        elif (army2.commanderBonus == 1):
+                                        elif (army2.commanderBonus == 3):
                                                 defcas = defendcas*0.95
                                                 battlemessage += "{} Casualties = {}% ({}*0.95) \n \n{} Casualties = {}% ({}*0.95)\n \n".format(army1.name,attcas,attackcas,army2.name,defcas,defendcas)
                                                 battlemessage += "--- \n \n"
@@ -541,15 +757,15 @@ class Battle:
                                                 battlemessage += "--- \n \n"
                                                 
                                 else:
-                                        if (army2.commanderBonus == 3):
+                                        if (army2.commanderBonus >= 9):
                                                 defcas = defendcas*0.8
                                                 battlemessage += "{} Casualties = {}% \n \n{} Casualties = {}% ({}*0.8)\n \n".format(army1.name,attackcas,army2.name,defcas,defendcas)
                                                 battlemessage += "--- \n \n"
-                                        elif (army2.commanderBonus == 2):
+                                        elif (army2.commanderBonus == 6):
                                                 defcas = defendcas*0.9
                                                 battlemessage += "{} Casualties = {}% \n \n{} Casualties = {}% ({}*0.9)\n \n".format(army1.name,attackcas,army2.name,defcas,defendcas)
                                                 battlemessage += "--- \n \n"
-                                        elif (army2.commanderBonus == 1):
+                                        elif (army2.commanderBonus == 3):
                                                 defcas = defendcas*0.95
                                                 battlemessage += "{} Casualties = {}% \n \n{} Casualties = {}% ({}*0.95)\n \n".format(army1.name,attackcas,army2.name,defcas,defendcas)
                                                 battlemessage += "--- \n \n"
@@ -557,7 +773,9 @@ class Battle:
                                                 battlemessage += "{} Casualties = {}% \n \n{} Casualties = {}% \n \n".format(army1.name,attackcas,army2.name,defendcas)
                                                 battlemessage += "--- \n \n"
        
-
+                battlemessage += "**REMINDER** that casualties of the larger army is affected by relative size, this must be calculated manually \n \n"
+                battlemessage += "--- \n \n" 
+                
                 return battlemessage
                 print ("Finished battle")
                 self.reset_battle_phase()
