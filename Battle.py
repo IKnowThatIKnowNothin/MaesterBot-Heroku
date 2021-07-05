@@ -12,7 +12,7 @@ class Battle:
                 
                 roundmessage = "##**Round {}** \n \n".format(roundCount)
 
-                if(roundCount == 1):
+                if(roundCount == 0):
                         if(Globals.battleType == 'Naval'):
                                 self.battlePhase = 0
                                 Globals.message = random.randint(1,4)
