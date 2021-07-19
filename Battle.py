@@ -624,9 +624,9 @@ class Battle:
                 battlemessage += "--- \n \n"
 
                 if(autosurrender == 1):
-                        battlemessage += "The {} army cannot battle and surrender to the enemy force".format(army1.name)
+                        battlemessage += "The {} army cannot battle and surrender to the enemy force \n \n".format(army1.name)
                 elif(autosurrender == 2):
-                        battlemessage += "The {} army cannot battle and surrender to the enemy force".format(army2.name)
+                        battlemessage += "The {} army cannot battle and surrender to the enemy force \n \n".format(army2.name)
                 else:
                         
                 
